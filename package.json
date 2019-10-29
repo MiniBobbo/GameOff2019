@@ -1,0 +1,22 @@
+{
+  "name": "init2",
+  "version": "1.0.0",
+  "description": "Phaser 3 base",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "phaser": "^3.20.1",
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.9"
+  }
+}
