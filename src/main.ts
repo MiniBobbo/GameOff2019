@@ -1,6 +1,6 @@
 import * as Phaser from "phaser";
 import { Preload } from "./scenes/Preload";
-import { FontScene } from "./scenes/FontScene";
+import { TsetScene } from "./scenes/TestScene";
 
 class Main extends Phaser.Game {
     constructor() {
@@ -11,12 +11,20 @@ class Main extends Phaser.Game {
           zoom:2,
           render: {
             pixelArt:true,
-          }
+          },
+          physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 100 },
+                // debug: true
+            }
+          },
+    
         };
         super(config);
 
         this.scene.add('preload', Preload, false);
-        this.scene.add('font', FontScene, false);
+        this.scene.add('test', TsetScene, false);
         this.scene.start('preload');
     }
 }

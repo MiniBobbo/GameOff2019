@@ -1,15 +1,15 @@
 export class Preload extends Phaser.Scene {
     preload() {
-        this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
-        var element = document.createElement('style');
+        // // this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
+        // var element = document.createElement('style');
 
-        document.head.appendChild(element);
+        // document.head.appendChild(element);
     
-        var sheet = element.sheet;
+        // var sheet = element.sheet;
     
-        var styles = '@font-face { font-family: "munro"; src: url("assets/munro.ttf") format("truetype"); }\n';
-        //@ts-ignore
-        sheet.insertRule(styles, 0);
+        // var styles = '@font-face { font-family: "munro"; src: url("assets/munro.ttf") format("truetype"); }\n';
+        // //@ts-ignore
+        // sheet.insertRule(styles, 0);
 
         let progressBar = this.add.graphics();
         let progressBox = this.add.graphics();
@@ -71,27 +71,31 @@ export class Preload extends Phaser.Scene {
     
         this.load.setBaseURL('./assets/')
         //Load stuff here.
+        this.load.spritesheet('ninja', 'ninja.png', {frameWidth:32});
+        this.load.tilemapTiledJSON('testlevel');
+        this.load.image('tileset');
+        this.load.atlas('mainAtlas', 'atlas.png', 'atlas.json');
 
 
     }
     create() {
         //@ts-ignore
-        WebFont.load({
-            google: {
-                families: [ 'Big Shoulders Text' ]
-                },
-            active: () =>{
-                this.FinishedThing();
-            },
+        // WebFont.load({
+        //     google: {
+        //         families: [ 'Big Shoulders Text' ]
+        //         },
+        //     active: () =>{
+        //         this.FinishedThing();
+        //     },
             
-        });
+        // });
 
     }
 
     count:number = 0;
     FinishedThing() {
         this.count++;
-        if(this.count == 2)
-            this.scene.start('font');
+        if(this.count == 1)
+            this.scene.start('test');
     }
 }

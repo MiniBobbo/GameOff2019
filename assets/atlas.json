@@ -1,0 +1,41 @@
+{
+	"textures": [
+		{
+			"image": "atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 34,
+				"h": 34
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "ninja_stand_0",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 32
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 32,
+						"h": 32
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:b5b3d57e667d0ffaa5a2cf50f54a14fd:f7b67263e1af8a3234d3c2ae3d44710c:cbce6b53f0f49e0bf15173c25c41f876$"
+	}
+}
