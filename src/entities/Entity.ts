@@ -8,8 +8,9 @@ export class Entity {
     constructor(scene:Phaser.Scene) {
         this.scene = scene;
         this.sprite = scene.physics.add.sprite(100,50, 'mainatlas');
-        this.sprite.setSize(14,14);
-        this.sprite.body.setSize(14,14);
+        // this.sprite.setSize(14,14);
+        // this.sprite.body.setSize(14,14);
+        this.sprite.body.setCircle(7);
         this.sprite.name = 'entity'; 
 
         this.sprite.on('pause', this.Pause, this);

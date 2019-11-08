@@ -99,20 +99,20 @@ export class TsetScene extends Phaser.Scene {
         this.player.sprite.emit('resume');
         this.waitOnInput = false;
         this.player.prepareForJump = false;
-        if(this.player.vertical) {
-            this.player.sprite.scaleY = 1 + C.JUMP_SCALE;
-            this.player.sprite.scaleX = C.JUMP_SCALE;
-        } else {
-            this.player.sprite.scaleX = 1 + C.JUMP_SCALE;
-            this.player.sprite.scaleY = C.JUMP_SCALE;
+        // if(this.player.vertical) {
+        //     this.player.sprite.scaleY = 1 + C.JUMP_SCALE;
+        //     this.player.sprite.scaleX = C.JUMP_SCALE;
+        // } else {
+        //     this.player.sprite.scaleX = 1 + C.JUMP_SCALE;
+        //     this.player.sprite.scaleY = C.JUMP_SCALE;
 
-        }
-        this.tweens.add({
-            duration:200,
-            targets:[this.player.sprite],
-            scaleX:1,
-            scaleY:1
-        });
+        // }
+        // this.tweens.add({
+        //     duration:200,
+        //     targets:[this.player.sprite],
+        //     scaleX:1,
+        //     scaleY:1
+        // });
 
     }
 
