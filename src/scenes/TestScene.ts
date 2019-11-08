@@ -7,6 +7,7 @@ export class TsetScene extends Phaser.Scene {
     camobj!:Phaser.GameObjects.Graphics;
     waitOnInput:boolean = false;
     debug!:Phaser.GameObjects.Text;
+    puff!:Phaser.GameObjects.Sprite;
     preload() {
 
     }
@@ -17,6 +18,9 @@ export class TsetScene extends Phaser.Scene {
         const bg  = map.createDynamicLayer("collide", tileset, 0, 0);
         bg.setCollisionByProperty({collide:true}, true);
         this.camobj = this.add.graphics({});
+
+        this.puff = this.add.sprite(0,0,'mainatlas');
+        this.puff.visible = false;
 
         this.physics.add.collider(this.player.sprite, bg, this.Collided);
 
@@ -34,6 +38,7 @@ export class TsetScene extends Phaser.Scene {
 
     CreateEvents() {
         this.events.on('JumpInput', this.JumpInput, this);
+        this.events.on('puff', this.Puff, this);
     }
 
     update() {
@@ -66,6 +71,26 @@ export class TsetScene extends Phaser.Scene {
         let a = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, this.input.mousePointer.worldX, this.input.mousePointer.worldY);
         a = Phaser.Math.RadToDeg(a);
         // console.log(`Angle: ${a}`);
+        let anim = this.player.sprite.anims.getCurrentKey();
+        switch (anim) {
+            case 'ninja_touchdown':
+                this.events.emit('puff', [0]);
+                break;
+            case 'ninja_touchup':
+                this.events.emit('puff', [2]);
+                break;
+            case 'ninja_touchside':
+                if(this.player.sprite.flipX)
+                this.events.emit('puff', [3]);
+                else 
+                this.events.emit('puff', [3]);
+
+                break;
+        
+            default:
+                break;
+        }
+
         this.physics.velocityFromAngle(a, 300, this.player.holdVelocity);
         if(Math.abs(this.player.holdVelocity.y) > Math.abs(this.player.holdVelocity.x))
             this.player.vertical = true;
@@ -89,8 +114,13 @@ export class TsetScene extends Phaser.Scene {
             scaleY:1
         });
 
-
     }
 
+    Puff(direction:number) {
+        this.puff.setPosition(this.player.sprite.x, this.player.sprite.y);
+        this.puff.setAngle(90*direction);
+        this.puff.setVisible(true);
+        this.puff.anims.play('puff');
+    }
 
 }

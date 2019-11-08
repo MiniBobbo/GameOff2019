@@ -6,7 +6,7 @@ export class Ninja extends Entity {
     prepareForJump:boolean = false;
     constructor(scene:Phaser.Scene) {
         super(scene);
-        this.sprite.name = 'Ninja';
+        this.sprite.name = 'ninja';
         this.sprite.on('collide', this.GetJump, this);
         this.scene.events.on('update', this.Update, this);
         this.sprite.on('destroy', this.Destroy, this);
@@ -16,15 +16,15 @@ export class Ninja extends Entity {
         this.scene.events.emit('JumpInput');
         this.prepareForJump = true;
         if(this.sprite.body.blocked.up)
-        this.sprite.anims.play('ninja_touchup');
+        this.PlayAnimation('touchup');
         else if(this.sprite.body.blocked.down)
-        this.sprite.anims.play('ninja_touchdown');
+        this.PlayAnimation('touchdown');
     else if(this.sprite.body.blocked.left) {
-        this.sprite.anims.play('ninja_touchside');
+        this.PlayAnimation('touchside');
         this.sprite.flipX = true;
     }
     else if(this.sprite.body.blocked.right) {
-        this.sprite.anims.play('ninja_touchside');
+        this.PlayAnimation('touchside');
         this.sprite.flipX = false;
     }
 }
@@ -34,11 +34,11 @@ export class Ninja extends Entity {
         if(!this.prepareForJump) {
             if(this.vertical) {
                 if(this.sprite.body.velocity.y > 0)
-                    this.sprite.anims.play('ninja_jumpdown');
+                    this.PlayAnimation('jumpdown');
                     else
-                    this.sprite.anims.play('ninja_jumpup');
+                    this.PlayAnimation('jumpup');
             } else {
-                this.sprite.anims.play('ninja_jumpside');
+                this.PlayAnimation('jumpside');
             }
             if(this.sprite.body.velocity.x > 0)
             this.sprite.flipX =false;

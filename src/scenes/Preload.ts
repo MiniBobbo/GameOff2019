@@ -80,12 +80,16 @@ export class Preload extends Phaser.Scene {
 
     CreateAnimations() {
         let frames  = this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchup_', end: 1});
-        this.anims.create({ key: 'ninja_jumpup', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpup_', end: 1}), repeat: 0 });
-        this.anims.create({ key: 'ninja_jumpdown', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpdown_', end: 1}), repeat: 0 });
-        this.anims.create({ key: 'ninja_jumpside', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpside_', end: 1}), repeat: 0 });
+        this.anims.create({ key: 'ninja_jumpup', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpup_', end: 1}), repeat: 0 });
+        this.anims.create({ key: 'ninja_jumpdown', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpdown_', end: 1}), repeat: 0 });
+        this.anims.create({ key: 'ninja_jumpside', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpside_', end: 1}), repeat: 0 });
+        // this.anims.create({ key: 'ninja_jumpup', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpup_e_', end: 22}), repeat: 0 });
+        // this.anims.create({ key: 'ninja_jumpdown', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpdown_e_', end: 28}), repeat: 0 });
+        // this.anims.create({ key: 'ninja_jumpside', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpside_e_', end: 58}), repeat: 0 });
         this.anims.create({ key: 'ninja_touchup', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchup_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'ninja_touchdown', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchdown_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'ninja_touchside', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchside_', end: 1}), repeat: 0 });
+        this.anims.create({ key: 'puff', frameRate: 16, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'effects_puff_', end: 4 }), repeat: 0 });
     }
     create() {
         //@ts-ignore

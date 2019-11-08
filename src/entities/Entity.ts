@@ -4,7 +4,7 @@ export class Entity {
     scene:Phaser.Scene;
     sprite:Phaser.Physics.Arcade.Sprite;
     holdVelocity!:Phaser.Math.Vector2;
-
+    lastAnim:string = '';
     constructor(scene:Phaser.Scene) {
         this.scene = scene;
         this.sprite = scene.physics.add.sprite(100,50, 'mainatlas');
@@ -35,6 +35,15 @@ export class Entity {
 
     SetVelocity(v:Phaser.Math.Vector2) {
         this.holdVelocity.copy(v);
+    }
+
+    PlayAnimation(anim:string, ignoreIfPlaying:boolean = true) {
+        let combinedAnim = `${this.sprite.name}_${anim}`;
+        if(ignoreIfPlaying && combinedAnim == this.lastAnim)
+            return;
+        this.sprite.anims.play(combinedAnim, ignoreIfPlaying);
+        this.sprite.setOffset(this.sprite.width/2 - this.sprite.body.width/2, this.sprite.height/2- this.sprite.body.height/2);
+        this.lastAnim = combinedAnim;
     }
 
 }
