@@ -1,6 +1,6 @@
 export class Preload extends Phaser.Scene {
     preload() {
-        // // this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
+        this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
         // var element = document.createElement('style');
 
         // document.head.appendChild(element);
@@ -8,7 +8,7 @@ export class Preload extends Phaser.Scene {
         // var sheet = element.sheet;
     
         // var styles = '@font-face { font-family: "munro"; src: url("assets/munro.ttf") format("truetype"); }\n';
-        // //@ts-ignore
+        //@ts-ignore
         // sheet.insertRule(styles, 0);
 
         let progressBar = this.add.graphics();
@@ -89,19 +89,22 @@ export class Preload extends Phaser.Scene {
         this.anims.create({ key: 'ninja_touchup', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchup_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'ninja_touchdown', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchdown_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'ninja_touchside', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchside_', end: 1}), repeat: 0 });
+        this.anims.create({ key: 'samurai_stand', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'samurai_stand_', end: 1}), repeat: 0 });
+        this.anims.create({ key: 'samurai_killed', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'samurai_killed_', end: 10}), repeat: 0 });
+        this.anims.create({ key: 'banner_sway', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'bannersway_', end: 58}), repeat: 0 });
         this.anims.create({ key: 'puff', frameRate: 16, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'effects_puff_', end: 4 }), repeat: 0 });
     }
     create() {
         //@ts-ignore
-        // WebFont.load({
-        //     google: {
-        //         families: [ 'Big Shoulders Text' ]
-        //         },
-        //     active: () =>{
-        //         this.FinishedThing();
-        //     },
+        WebFont.load({
+            google: {
+                families: [ 'Yeon Sung' ]
+                },
+            active: () =>{
+                this.FinishedThing();
+            },
             
-        // });
+        });
         this.CreateAnimations();
 
     }
@@ -109,7 +112,7 @@ export class Preload extends Phaser.Scene {
     count:number = 0;
     FinishedThing() {
         this.count++;
-        if(this.count == 1)
-            this.scene.start('test');
+        if(this.count == 2)
+            this.scene.start('menu');
     }
 }
