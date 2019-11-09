@@ -5,6 +5,9 @@ import { Samurai } from "../entities/Samurai";
 import { Flag } from "../entities/Flag";
 import { MenuScene } from "./MenuScene";
 import { LargeBlade } from "../entities/LargeBlade";
+import { Magistrate } from "../entities/Magistrate";
+import { Pot } from "../entities/Pot";
+import { Attack } from "../entities/Attack";
 
 export class TsetScene extends Phaser.Scene {
     player!: Ninja;
@@ -19,8 +22,11 @@ export class TsetScene extends Phaser.Scene {
     levelStarted:boolean = false;
     allSprites!:Array<Phaser.GameObjects.Sprite>;
     enemiesKilled:number = 0;
+    magistratesKilled:number = 0;
     touchingFlag:boolean = false;
+    loudnoise:boolean = false;
     private ninjaDead:boolean = false;
+    attacks!:Array<Attack>;
 
 
     preload() {
@@ -33,10 +39,12 @@ export class TsetScene extends Phaser.Scene {
         this.timer = 0;
         this.waitOnInput = false;
         this.ninjaDead = false;
+        this.loudnoise = false;
     }
 
     create() {
         this.ResetLevel();
+        this.attacks = [];
         this.player = new Ninja(this);
         this.player.PlayAnimation('touchdown');
         this.player.sprite.setDepth(5);
@@ -101,6 +109,19 @@ export class TsetScene extends Phaser.Scene {
             s.sprite.setPosition(o.x,o.y);
             this.allSprites.push(s.sprite);
         });
+        let mag = o.objects.filter( (obj:any) => {return obj.name == 'magistrate'});
+        mag.forEach( (o:any) => {
+            let s = new Magistrate(this);
+            s.sprite.setPosition(o.x,o.y);
+            this.allSprites.push(s.sprite);
+        });
+        let pots = o.objects.filter( (obj:any) => {return obj.name == 'pot'});
+        pots.forEach( (o:any) => {
+            let p = new Pot(this);
+            let ypos = Math.round(o.y / C.TILE_SIZE) * C.TILE_SIZE;
+            p.sprite.setPosition(o.x,ypos - 8);
+            this.allSprites.push(p.sprite);
+        });
         let blades = o.objects.filter( (obj:any) => {return obj.name == 'blade'});
         blades.forEach( (o:any) => {
             let s = new LargeBlade(this);
@@ -134,8 +155,10 @@ export class TsetScene extends Phaser.Scene {
 
         }, this)
         this.events.on('samuraikilled', this.SamuraiKilled, this);
+        this.events.on('magistratekilled', this.MagistrateKilled, this);
         this.events.on('touchflag', this.TouchFlag, this);
         this.events.on('ninjadead', this.NinjaDead, this);
+        this.events.on('noise', this.Noise, this);
         
     }
     Destroy() {
@@ -146,6 +169,7 @@ export class TsetScene extends Phaser.Scene {
         this.events.removeListener('centertext');
         this.events.removeListener('samuraikilled', this.FinishLevel, this);
         this.events.removeListener('ninjadead', this.NinjaDead, this);
+        this.events.removeListener('noise', this.Noise, this);
 
     }
 
@@ -292,6 +316,15 @@ export class TsetScene extends Phaser.Scene {
         this.enemiesKilled++;
         this.CheckWinCondition();
     }
+    MagistrateKilled(arg0: string, SamuraiKilled: any, arg2: this) {
+        this.magistratesKilled++;
+        this.CheckWinCondition();
+    }
+
+    Noise() {
+        this.loudnoise = true;
+        this.CheckWinCondition();
+    }
 
     NinjaDead() {
         if(this.ninjaDead)
@@ -329,8 +362,14 @@ export class TsetScene extends Phaser.Scene {
             }
         });
 
-
-
     }
+
+    GetAttack() {
+        let a = this.attacks.find((a:any) => {return !a.alive;});
+        if (a==null) {
+            a = new Attack(this);
+        }
+        return a;
+    }           
 
 }

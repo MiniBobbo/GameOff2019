@@ -10,7 +10,7 @@ export class C {
     static CurrentLevel = '2';
     static CurrentLevelData:LevelData;
 
-    static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4'];
+    static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6'];
     static WinConditions:Array<LevelData>;
 
     static levelData:Array<LevelData>;
@@ -42,6 +42,22 @@ export class C {
             return false;
         });
         C.CreateLevelCondition('Level 4', 'Reach the flag', (level:TsetScene) =>{
+            if(level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 5', 'Kill ONLY the magistrate', (level:TsetScene) =>{
+            if(level.enemiesKilled == 1) {
+                level.events.emit('ninjadead');
+            }
+            if(level.magistratesKilled==1)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 6', 'Get to the flag.  Be SILENT', (level:TsetScene) =>{
+            if(level.enemiesKilled == 1 || level.loudnoise) {
+                level.events.emit('ninjadead');
+            }
             if(level.touchingFlag)
             return true;
             return false;

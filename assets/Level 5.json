@@ -40,8 +40,20 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":162,
+                 "x":233,
                  "y":102.666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":7,
+                 "name":"magistrate",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":169,
+                 "y":101
                 }],
          "opacity":1,
          "type":"objectgroup",

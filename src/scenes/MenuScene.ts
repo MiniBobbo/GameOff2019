@@ -57,11 +57,11 @@ export class MenuScene extends Phaser.Scene {
         
         Phaser.Actions.GridAlign(this.levels, {
             x:90,
-            y: 110,
+            y:110,
             cellWidth:100,
             cellHeight:50,
-            width: 360,
-            height:150
+            width: 4,
+            height:3
         });
 
         let totalTime = this.add.text(0,240,'Total Time: ---', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})

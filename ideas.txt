@@ -5,6 +5,8 @@ Steal the item
 Assassinate the leader, Leave everyone else alive
 Burn the supplies
 Avoid the blades
+Avoid the traps
+Two crossbows shooting down a very narrow corridor
 
 
 Powerups (Placed in the level and are used immediately when picked up)
