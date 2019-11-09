@@ -91,7 +91,7 @@ export class Preload extends Phaser.Scene {
         this.anims.create({ key: 'ninja_touchside', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchside_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'samurai_stand', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'samurai_stand_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'samurai_killed', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'samurai_killed_', end: 10}), repeat: 0 });
-        this.anims.create({ key: 'banner_sway', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'bannersway_', end: 58}), repeat: 0 });
+        this.anims.create({ key: 'flag_sway', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'bannersway_', end: 58}), repeat: -1 });
         this.anims.create({ key: 'puff', frameRate: 16, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'effects_puff_', end: 4 }), repeat: 0 });
     }
     create() {

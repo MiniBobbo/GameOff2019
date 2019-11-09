@@ -2,6 +2,7 @@ import { Entity } from "../entities/Entity";
 import { Ninja } from "../entities/Ninja";
 import { C } from "../C";
 import { Samurai } from "../entities/Samurai";
+import { Flag } from "../entities/Flag";
 
 export class TsetScene extends Phaser.Scene {
     player!: Ninja;
@@ -56,7 +57,7 @@ export class TsetScene extends Phaser.Scene {
         this.player.sprite.emit('resume');
         this.debug = this.add.text(0,0, '');
         this.debug.setScrollFactor(0,0);
-        this.goal = this.add.text(0, 250, 'Kill the samurai', {align:'center'})
+        this.goal = this.add.text(0, 250, 'Kill the samurai then reach the flag', {align:'center'})
         .setFontFamily('"Yeon Sung"')
         .setFontSize(18)
         // .setWordWrapWidth(480)
@@ -85,7 +86,8 @@ export class TsetScene extends Phaser.Scene {
     PlaceObjects(map: Phaser.Tilemaps.Tilemap) {
         let o = map.getObjectLayer('o');
         let ninja:any = o.objects.find( (obj:any) =>{return obj.name == 'ninja'}  );
-        this.player.sprite.setPosition(ninja.x, ninja.y);
+        let ypos = Math.round(ninja.y / C.TILE_SIZE) * C.TILE_SIZE;
+        this.player.sprite.setPosition(ninja.x, ypos);
 
         let sams = o.objects.filter( (obj:any) => {return obj.name == 'samurai'});
         sams.forEach( (o:any) => {
@@ -93,6 +95,16 @@ export class TsetScene extends Phaser.Scene {
             s.sprite.setPosition(o.x,o.y);
             this.allSprites.push(s.sprite);
         });
+
+        let flag = o.objects.find( (obj:any) => {return obj.name == 'flag';});
+        if(flag != null) {
+            let f = new Flag(this);
+            //@ts-ignore
+            let ypos = Math.round(flag.y / C.TILE_SIZE) * C.TILE_SIZE;
+            f.sprite.setPosition(flag.x, ypos);
+            this.allSprites.push(f.sprite); 
+
+        }
     }
 
     CreateEvents() {
@@ -110,8 +122,10 @@ export class TsetScene extends Phaser.Scene {
 
         }, this)
         this.events.on('samuraikilled', this.SamuraiKilled, this);
+        this.events.on('touchflag', this.TouchFlag, this);
     }
     Destroy() {
+        this.events.removeListener('touchflag', this.TouchFlag, this);
         this.events.removeListener('pause');
         this.events.removeListener('puff');
         this.events.removeListener('JumpInput');
@@ -225,7 +239,7 @@ export class TsetScene extends Phaser.Scene {
     }
 
     CheckWinCondition() {
-        if(this.enemiesKilled==2)
+        if(this.enemiesKilled==2 && this.touchingFlag)
             this.FinishLevel();
     }
 
