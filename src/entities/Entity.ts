@@ -7,7 +7,7 @@ export class Entity {
     lastAnim:string = '';
     constructor(scene:Phaser.Scene) {
         this.scene = scene;
-        this.sprite = scene.physics.add.sprite(100,50, 'mainatlas');
+        this.sprite = scene.physics.add.sprite(-100,-150, 'mainatlas');
         // this.sprite.setSize(14,14);
         // this.sprite.body.setSize(14,14);
         this.sprite.body.setCircle(7);

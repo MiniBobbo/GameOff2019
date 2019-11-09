@@ -14,28 +14,38 @@ export class TsetScene extends Phaser.Scene {
     timeText!:Phaser.GameObjects.Text;
     timer:number = 0;
     levelStarted:boolean = false;
+    allSprites!:Array<Phaser.GameObjects.Sprite>;
+    enemiesKilled:number = 0;
+    touchingFlag:boolean = false;
+
 
     preload() {
 
     }
-    create() {
+
+    ResetLevel() {
+        this.enemiesKilled = 0;
+        this.touchingFlag = false;
         this.timer = 0;
         this.waitOnInput = false;
+    }
+
+    create() {
+        this.ResetLevel();
         this.player = new Ninja(this);
-        let sam = new Samurai(this);
-        sam.sprite.setPosition(185, 50);
         let map = this.make.tilemap({ key: 'testlevel' });
         const tileset = map.addTilesetImage("tileset", "tileset");
         const bg  = map.createDynamicLayer("collide", tileset, 0, 0);
         bg.setCollisionByProperty({collide:true}, true);
         this.camobj = this.add.graphics({});
 
+        this.allSprites = [];
         this.puff = this.add.sprite(0,0,'mainatlas');
         this.puff.visible = false;
 
         this.physics.add.collider(this.player.sprite, bg, this.Collided);
-        this.physics.add.collider(sam.sprite, bg, this.Collided);
-        this.physics.add.overlap(this.player.sprite, sam.sprite, (n:any, s:any) => {s.emit('ninjahit');});
+        this.physics.add.collider(this.allSprites, bg, this.Collided);
+        this.physics.add.overlap(this.player.sprite, this.allSprites, (n:any, s:any) => {s.emit('ninjahit');});
 
         this.cameras.main.startFollow(this.camobj);
         this.cameras.main.setBounds(0,0,bg.width, bg.height);
@@ -65,9 +75,24 @@ export class TsetScene extends Phaser.Scene {
         .setFixedSize(480, 0)
         .setScrollFactor(0,0);
         
+        this.PlaceObjects(map);
+
         this.CreateEvents();
         this.StartLevel();
 
+    }
+
+    PlaceObjects(map: Phaser.Tilemaps.Tilemap) {
+        let o = map.getObjectLayer('o');
+        let ninja:any = o.objects.find( (obj:any) =>{return obj.name == 'ninja'}  );
+        this.player.sprite.setPosition(ninja.x, ninja.y);
+
+        let sams = o.objects.filter( (obj:any) => {return obj.name == 'samurai'});
+        sams.forEach( (o:any) => {
+            let s = new Samurai(this);
+            s.sprite.setPosition(o.x,o.y);
+            this.allSprites.push(s.sprite);
+        });
     }
 
     CreateEvents() {
@@ -84,7 +109,7 @@ export class TsetScene extends Phaser.Scene {
             });
 
         }, this)
-        this.events.on('samuraikilled', this.FinishLevel, this);
+        this.events.on('samuraikilled', this.SamuraiKilled, this);
     }
     Destroy() {
         this.events.removeListener('pause');
@@ -96,6 +121,7 @@ export class TsetScene extends Phaser.Scene {
     }
 
     update(time:number, dt:number) {
+        this.touchingFlag = false;
         // this.camobj.setPosition((this.input.mousePointer.worldX - this.player.sprite.x)/2, (this.input.mousePointer.worldY - this.player.sprite.y) /2);
         this.camobj.setPosition((this.player.sprite.x), (this.player.sprite.y));
         // this.debug.text = `x: ${this.camobj.x}, y: ${this.camobj.y}`;
@@ -198,6 +224,16 @@ export class TsetScene extends Phaser.Scene {
         });
     }
 
+    CheckWinCondition() {
+        if(this.enemiesKilled==2)
+            this.FinishLevel();
+    }
+
+    TouchFlag() {
+        this.touchingFlag = true;
+        this.CheckWinCondition();
+    }
+
     FinishLevel() {
         this.levelStarted = false;
         this.centerText.alpha = 1;
@@ -207,6 +243,10 @@ export class TsetScene extends Phaser.Scene {
             callbackScope:this,
             callback:() => {this.scene.start('menu');}
         });
+    }
+    SamuraiKilled(arg0: string, SamuraiKilled: any, arg2: this) {
+        this.enemiesKilled++;
+        this.CheckWinCondition();
     }
 
 }

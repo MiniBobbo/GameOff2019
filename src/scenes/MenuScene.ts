@@ -1,3 +1,5 @@
+import { TsetScene } from "./TestScene";
+
 export class MenuScene extends Phaser.Scene {
     preload() {
 
@@ -18,6 +20,8 @@ export class MenuScene extends Phaser.Scene {
     }
 
     StartLevel() {
+        this.scene.remove('test');
+        this.scene.add('test', TsetScene, false);
         this.scene.start('test');
     }
 }
