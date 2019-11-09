@@ -27,26 +27,7 @@ class Main extends Phaser.Game {
         super(config);
 
         C.levelData = [];
-        let l1 = new LevelData();
-        l1.Goal = 'Kill the samurai';
-        l1.Name = 'Level 1';
-        l1.WinCondition = (level:TsetScene) =>{
-          if(level.enemiesKilled == 1)
-            return true;
-            return false;
-        };
-        C.levelData.push(l1);
-
-        let l2 = new LevelData();
-        l2.Goal = 'Kill both samurai and reach the flag';
-        l2.Name = 'Level 2';
-        l2.WinCondition = (level:TsetScene) =>{
-          if(level.enemiesKilled == 2 && level.touchingFlag)
-            return true;
-            return false;
-        };
-        C.levelData.push(l2);
-
+        C.CreateLevelData();
         this.scene.add('preload', Preload, false);
         this.scene.add('menu', MenuScene, false);
         this.scene.start('preload');

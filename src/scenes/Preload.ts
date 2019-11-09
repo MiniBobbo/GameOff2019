@@ -92,12 +92,15 @@ export class Preload extends Phaser.Scene {
         this.anims.create({ key: 'ninja_jumpdown', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpdown_e_', end: 28}), repeat: 0 });
         this.anims.create({ key: 'ninja_jumpside', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_jumpside_e_', end: 58}), repeat: 0 });
         this.anims.create({ key: 'ninja_touchup', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchup_', end: 1}), repeat: 0 });
+        this.anims.create({ key: 'ninja_dead', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_dead_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'ninja_touchdown', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchdown_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'ninja_touchside', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchside_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'samurai_stand', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'samurai_stand_', end: 1}), repeat: 0 });
+        this.anims.create({ key: 'blade_spin', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'blade_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'samurai_killed', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'samurai_killed_', end: 10}), repeat: 0 });
         this.anims.create({ key: 'flag_sway', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'bannersway_', end: 58}), repeat: -1 });
         this.anims.create({ key: 'puff', frameRate: 16, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'effects_puff_', end: 4 }), repeat: 0 });
+        this.anims.create({ key: 'disappear', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'disappear_', end: 29 }), repeat: 0 });
     }
     create() {
         //@ts-ignore

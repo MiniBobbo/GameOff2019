@@ -4,6 +4,7 @@ import { C } from "../C";
 import { Samurai } from "../entities/Samurai";
 import { Flag } from "../entities/Flag";
 import { MenuScene } from "./MenuScene";
+import { LargeBlade } from "../entities/LargeBlade";
 
 export class TsetScene extends Phaser.Scene {
     player!: Ninja;
@@ -19,6 +20,7 @@ export class TsetScene extends Phaser.Scene {
     allSprites!:Array<Phaser.GameObjects.Sprite>;
     enemiesKilled:number = 0;
     touchingFlag:boolean = false;
+    private ninjaDead:boolean = false;
 
 
     preload() {
@@ -30,11 +32,14 @@ export class TsetScene extends Phaser.Scene {
         this.touchingFlag = false;
         this.timer = 0;
         this.waitOnInput = false;
+        this.ninjaDead = false;
     }
 
     create() {
         this.ResetLevel();
         this.player = new Ninja(this);
+        this.player.PlayAnimation('touchdown');
+        this.player.sprite.setDepth(5);
         let map = this.make.tilemap({ key: C.CurrentLevel });
         const tileset = map.addTilesetImage("tileset", "tileset");
         const bg  = map.createDynamicLayer("collide", tileset, 0, 0);
@@ -62,19 +67,20 @@ export class TsetScene extends Phaser.Scene {
         .setFontSize(18)
         .setStroke('#000000', 3)
         // .setWordWrapWidth(480)
-        .setFixedSize(480, 0).setScrollFactor(0,0);
+        .setFixedSize(480, 0).setScrollFactor(0,0)
+        .setDepth(50);
 
         this.timeText = this.add.text(5, 250, '0.00', {color:0xff0000, fontFamily: '"Yeon Sung", "Arial"'})
         .setFontSize(18 )
         // .setWordWrapWidth(480)
-        .setScrollFactor(0,0).setStroke('#ff0000', 3);
+        .setScrollFactor(0,0).setStroke('#ff0000', 3).setDepth(50);
         // .setShadow(2,2,'0x000000', 2,false, false);
     
         this.centerText = this.add.text(0, 111, '', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
         .setFontSize(48)
         .setStroke('#000000', 5)
         .setFixedSize(480, 0)
-        .setScrollFactor(0,0);
+        .setScrollFactor(0,0).setDepth(50);
         
         this.PlaceObjects(map);
 
@@ -92,6 +98,12 @@ export class TsetScene extends Phaser.Scene {
         let sams = o.objects.filter( (obj:any) => {return obj.name == 'samurai'});
         sams.forEach( (o:any) => {
             let s = new Samurai(this);
+            s.sprite.setPosition(o.x,o.y);
+            this.allSprites.push(s.sprite);
+        });
+        let blades = o.objects.filter( (obj:any) => {return obj.name == 'blade'});
+        blades.forEach( (o:any) => {
+            let s = new LargeBlade(this);
             s.sprite.setPosition(o.x,o.y);
             this.allSprites.push(s.sprite);
         });
@@ -123,6 +135,8 @@ export class TsetScene extends Phaser.Scene {
         }, this)
         this.events.on('samuraikilled', this.SamuraiKilled, this);
         this.events.on('touchflag', this.TouchFlag, this);
+        this.events.on('ninjadead', this.NinjaDead, this);
+        
     }
     Destroy() {
         this.events.removeListener('touchflag', this.TouchFlag, this);
@@ -131,6 +145,7 @@ export class TsetScene extends Phaser.Scene {
         this.events.removeListener('JumpInput');
         this.events.removeListener('centertext');
         this.events.removeListener('samuraikilled', this.FinishLevel, this);
+        this.events.removeListener('ninjadead', this.NinjaDead, this);
 
     }
 
@@ -147,7 +162,8 @@ export class TsetScene extends Phaser.Scene {
     }
 
     Collided(e:any, o:any) {
-        console.log('Called collided');
+        if(this.ninjaDead)
+        return;
         e.emit('collide', o);
         e.emit('pause');
         // o.emit('collide', e);
@@ -160,7 +176,7 @@ export class TsetScene extends Phaser.Scene {
 
     Clicked() {
         // this.events.emit('centertext', ['Jumped']);
-        if(!this.waitOnInput || !this.levelStarted) 
+        if(this.ninjaDead || !this.waitOnInput || !this.levelStarted) 
             return;
 
         let a = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, this.input.mousePointer.worldX, this.input.mousePointer.worldY);
@@ -239,7 +255,7 @@ export class TsetScene extends Phaser.Scene {
     }
 
     CheckWinCondition() {
-        if(C.CurrentLevelData.WinCondition(this))
+        if(!this.ninjaDead && C.CurrentLevelData.WinCondition(this))
             this.FinishLevel();
     }
 
@@ -250,7 +266,9 @@ export class TsetScene extends Phaser.Scene {
 
     FinishLevel() {
         this.levelStarted = false;
+        this.ninjaDead = true;
         this.centerText.alpha = 1;
+        this.player.sprite.setVelocity(0,0);
         this.centerText.setText('COMPLETE'); 
         let bestTime = localStorage.getItem(C.CurrentLevel);
         if(bestTime == null || parseFloat(bestTime) > parseFloat(this.timeText.text)) {
@@ -273,6 +291,46 @@ export class TsetScene extends Phaser.Scene {
     SamuraiKilled(arg0: string, SamuraiKilled: any, arg2: this) {
         this.enemiesKilled++;
         this.CheckWinCondition();
+    }
+
+    NinjaDead() {
+        if(this.ninjaDead)
+        return;
+        this.player.sprite.emit('dead');
+        this.waitOnInput = false;
+        this.ninjaDead = true;
+
+        this.player.PlayAnimation('dead');
+        this.player.sprite.setVelocity(-40, -100);
+        this.player.sprite.setAngularVelocity(500);
+
+        this.time.addEvent({
+            delay:500,
+            callbackScope:this,
+            callback: () => {
+                this.player.sprite.setVisible(false);
+                let d = this.add.sprite(this.player.sprite.x, this.player.sprite.y, 'mainatlas', '');
+                d.anims.play('disappear');
+                this.add.text(0, 150, 'Disgraced', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
+                .setFontSize(30)
+                .setColor('#ff0000')
+                .setStroke('#000000', 5)
+                .setFixedSize(480, 0)
+                .setScrollFactor(0,0); 
+                },
+            repeat:0   
+        });
+        this.time.addEvent({
+            delay:3000,
+            callbackScope:this,
+            callback:() =>{
+                this.scene.start('menu');
+
+            }
+        });
+
+
+
     }
 
 }

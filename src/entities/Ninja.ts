@@ -4,10 +4,12 @@ import { C } from "../C";
 export class Ninja extends Entity {
     vertical:boolean = false;
     prepareForJump:boolean = false;
+    dead:boolean = false;
     constructor(scene:Phaser.Scene) {
         super(scene);
         this.sprite.name = 'ninja';
         this.sprite.on('collide', this.GetJump, this);
+        this.sprite.on('dead', () => {this.dead = true;}, this);
         this.scene.events.on('update', this.Update, this);
         this.sprite.on('destroy', this.Destroy, this);
     }
@@ -30,6 +32,8 @@ export class Ninja extends Entity {
 }
 
     Update(time:number, dt:number) {
+        if(this.dead)
+            return;
         // console.log('Ninja update');
         if(!this.prepareForJump) {
             if(this.vertical) {
@@ -50,7 +54,9 @@ export class Ninja extends Entity {
     Destroy() {
         console.log('Ninja destroy');
         this.scene.events.removeListener('update', this.Update, this);
-    
+        this.sprite.removeListener('dead', () => {this.dead = true;}, this);
+        this.sprite.removeListener('collide', this.GetJump, this);
+        this.sprite.removeListener('destroy', this.Destroy, this);
     }
 
 }

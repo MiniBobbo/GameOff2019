@@ -4,6 +4,7 @@ Reach the flag
 Steal the item
 Assassinate the leader, Leave everyone else alive
 Burn the supplies
+Avoid the blades
 
 
 Powerups (Placed in the level and are used immediately when picked up)

@@ -56,8 +56,8 @@ export class MenuScene extends Phaser.Scene {
 
         
         Phaser.Actions.GridAlign(this.levels, {
-            x:110,
-            y: 100,
+            x:90,
+            y: 110,
             cellWidth:100,
             cellHeight:50,
             width: 360,
@@ -69,7 +69,7 @@ export class MenuScene extends Phaser.Scene {
         .setFontSize(20)
         .setWordWrapWidth(480);
         if(this.AllLevelsComplete) {
-            totalTime.text = `Total Time: ${this.totalTimes}`;
+            totalTime.text = `Total Time: ${this.totalTimes.toFixed(2)}`;
         }
 
     }
