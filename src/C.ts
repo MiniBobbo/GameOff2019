@@ -10,7 +10,7 @@ export class C {
     static CurrentLevel = '2';
     static CurrentLevelData:LevelData;
 
-    static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6'];
+    static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6', 'Level 7', "Level 8", 'Level 9'];
     static WinConditions:Array<LevelData>;
 
     static levelData:Array<LevelData>;
@@ -59,6 +59,21 @@ export class C {
                 level.events.emit('ninjadead');
             }
             if(level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 7', 'Reach the flag', (level:TsetScene) =>{
+            if(level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 8', 'Reach the flag.', (level:TsetScene) =>{
+            if(level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 9', 'Attack the Oni from the grass.  Reach the flag.', (level:TsetScene) =>{
+            if(level.touchingFlag && level.royalSamuraiKilled == 1)
             return true;
             return false;
         });

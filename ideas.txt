@@ -1,13 +1,13 @@
 Win conditions:
-Kill all the samurai
-Reach the flag
+-Kill all the samurai
+-Reach the flag
 Steal the item
-Assassinate the leader, Leave everyone else alive
+-Assassinate the leader, Leave everyone else alive
 Burn the supplies
-Avoid the blades
-Avoid the traps
-Two crossbows shooting down a very narrow corridor
-
+-Avoid the blades
+-Avoid the traps
+-Two crossbows shooting down a very narrow corridor
+-Attack from stealth
 
 Powerups (Placed in the level and are used immediately when picked up)
 Firebomb

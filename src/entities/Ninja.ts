@@ -5,6 +5,7 @@ export class Ninja extends Entity {
     vertical:boolean = false;
     prepareForJump:boolean = false;
     dead:boolean = false;
+    hidden:boolean = false;
     constructor(scene:Phaser.Scene) {
         super(scene);
         this.sprite.name = 'ninja';
@@ -12,9 +13,12 @@ export class Ninja extends Entity {
         this.sprite.on('dead', () => {this.dead = true;}, this);
         this.scene.events.on('update', this.Update, this);
         this.sprite.on('destroy', this.Destroy, this);
+        this.sprite.on('hide', () => {this.hidden = true; this.sprite.alpha = .5;}, this);
+        this.sprite.on('unhide', () => {this.hidden = false ; this.sprite.alpha = 1;}, this);
     }
 
     GetJump(){
+        this.sprite.emit('unhide');
         this.scene.events.emit('JumpInput');
         this.prepareForJump = true;
         if(this.sprite.body.blocked.up)
@@ -57,6 +61,8 @@ export class Ninja extends Entity {
         this.sprite.removeListener('dead', () => {this.dead = true;}, this);
         this.sprite.removeListener('collide', this.GetJump, this);
         this.sprite.removeListener('destroy', this.Destroy, this);
+        this.sprite.removeListener('hide', () => {this.hidden = true; this.sprite.alpha = .5;}, this);
+        this.sprite.removeListener('unhide', () => {this.hidden = false ; this.sprite.alpha = 1;}, this);
     }
 
 }

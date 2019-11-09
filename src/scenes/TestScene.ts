@@ -8,6 +8,9 @@ import { LargeBlade } from "../entities/LargeBlade";
 import { Magistrate } from "../entities/Magistrate";
 import { Pot } from "../entities/Pot";
 import { Attack } from "../entities/Attack";
+import { Crossbow } from "../entities/Crossbow";
+import { Grass } from "../entities/Grass";
+import { RoyalSamurai } from "../entities/RoyalSamurai";
 
 export class TsetScene extends Phaser.Scene {
     player!: Ninja;
@@ -20,13 +23,15 @@ export class TsetScene extends Phaser.Scene {
     timeText!:Phaser.GameObjects.Text;
     timer:number = 0;
     levelStarted:boolean = false;
-    allSprites!:Array<Phaser.GameObjects.Sprite>;
+    allSprites!:Array<Phaser.GameObjects.GameObject>;
     enemiesKilled:number = 0;
     magistratesKilled:number = 0;
+    royalSamuraiKilled:number = 0;
     touchingFlag:boolean = false;
     loudnoise:boolean = false;
     private ninjaDead:boolean = false;
     attacks!:Array<Attack>;
+    effects!:Array<Phaser.GameObjects.Sprite>;
 
 
     preload() {
@@ -45,6 +50,7 @@ export class TsetScene extends Phaser.Scene {
     create() {
         this.ResetLevel();
         this.attacks = [];
+        this.effects = [];
         this.player = new Ninja(this);
         this.player.PlayAnimation('touchdown');
         this.player.sprite.setDepth(5);
@@ -108,10 +114,18 @@ export class TsetScene extends Phaser.Scene {
             let s = new Samurai(this);
             s.sprite.setPosition(o.x,o.y);
             this.allSprites.push(s.sprite);
+            if(o.properties != null && o.properties.find((p:any)=> {return p.name == 'flipX'}) != null)
+                s.sprite.flipX = true;
         });
         let mag = o.objects.filter( (obj:any) => {return obj.name == 'magistrate'});
         mag.forEach( (o:any) => {
             let s = new Magistrate(this);
+            s.sprite.setPosition(o.x,o.y);
+            this.allSprites.push(s.sprite);
+        });
+        let rs = o.objects.filter( (obj:any) => {return obj.name == 'royalsamurai'});
+        rs.forEach( (o:any) => {
+            let s = new RoyalSamurai(this);
             s.sprite.setPosition(o.x,o.y);
             this.allSprites.push(s.sprite);
         });
@@ -128,6 +142,27 @@ export class TsetScene extends Phaser.Scene {
             s.sprite.setPosition(o.x,o.y);
             this.allSprites.push(s.sprite);
         });
+        let grasses = o.objects.filter( (obj:any) => {return obj.name == 'grass'});
+        grasses.forEach( (o:any) => {
+            let s = new Grass(this);
+            s.sprite.setDepth(6);
+            let ypos = Math.round(o.y / C.TILE_SIZE) * C.TILE_SIZE;
+            let xpos = Math.round(o.x / C.TILE_SIZE) * C.TILE_SIZE;
+
+            s.sprite.setPosition(xpos,ypos+8);
+            this.allSprites.push(s.sprite);
+        });
+        let bolts = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'bolt'});
+        bolts.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
+            let s = new Crossbow(this);
+            s.sprite.setPosition(o.x,o.y);
+            let angle = o.properties.find((p:any) => {return p.name == 'angle'});
+            let vel = o.properties.find((p:any) => {return p.name == 'velocity'});
+            let d = o.properties.find((p:any) => {return p.name == 'firedelay'});
+            let off = o.properties.find((p:any) => {return p.name == 'fireoffset'});
+            s.ArmCrossbow(angle.value, vel.value, d.value, off.value);
+            this.allSprites.push(s.sprite);
+        });
 
         let flag = o.objects.find( (obj:any) => {return obj.name == 'flag';});
         if(flag != null) {
@@ -136,7 +171,6 @@ export class TsetScene extends Phaser.Scene {
             let ypos = Math.round(flag.y / C.TILE_SIZE) * C.TILE_SIZE;
             f.sprite.setPosition(flag.x, ypos);
             this.allSprites.push(f.sprite); 
-
         }
     }
 
@@ -156,12 +190,14 @@ export class TsetScene extends Phaser.Scene {
         }, this)
         this.events.on('samuraikilled', this.SamuraiKilled, this);
         this.events.on('magistratekilled', this.MagistrateKilled, this);
+        this.events.on('royalsamuraikilled', this.RoyalSamuraiKilled, this);
         this.events.on('touchflag', this.TouchFlag, this);
         this.events.on('ninjadead', this.NinjaDead, this);
         this.events.on('noise', this.Noise, this);
         
     }
     Destroy() {
+        this.events.removeListener('royalsamuraikilled', this.RoyalSamuraiKilled, this);
         this.events.removeListener('touchflag', this.TouchFlag, this);
         this.events.removeListener('pause');
         this.events.removeListener('puff');
@@ -178,7 +214,7 @@ export class TsetScene extends Phaser.Scene {
         // this.camobj.setPosition((this.input.mousePointer.worldX - this.player.sprite.x)/2, (this.input.mousePointer.worldY - this.player.sprite.y) /2);
         this.camobj.setPosition((this.player.sprite.x), (this.player.sprite.y));
         // this.debug.text = `x: ${this.camobj.x}, y: ${this.camobj.y}`;
-        if(this.levelStarted) {
+        if(this.levelStarted && !this.ninjaDead) {
             this.timer += dt;
             this.timeText.text = (this.timer/1000).toFixed(2);
         }
@@ -320,6 +356,10 @@ export class TsetScene extends Phaser.Scene {
         this.magistratesKilled++;
         this.CheckWinCondition();
     }
+    RoyalSamuraiKilled(arg0: string, RoyalSamuraiKilled: any, arg2: this) {
+        this.royalSamuraiKilled++;
+        this.CheckWinCondition();
+    }
 
     Noise() {
         this.loudnoise = true;
@@ -368,6 +408,16 @@ export class TsetScene extends Phaser.Scene {
         let a = this.attacks.find((a:any) => {return !a.alive;});
         if (a==null) {
             a = new Attack(this);
+            this.allSprites.push(a.sprite);
+
+        }
+        return a;
+    }           
+    GetEffect() {
+        let a = this.effects.find((a:Phaser.GameObjects.Sprite) => {return !a.active;});
+        if (a==null) {
+            a = this.add.sprite(-100,-100, 'mainatlas', 'smallburst_0');
+            this.effects.push(a);
         }
         return a;
     }           

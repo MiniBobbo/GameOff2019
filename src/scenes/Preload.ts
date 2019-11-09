@@ -96,14 +96,21 @@ export class Preload extends Phaser.Scene {
         this.anims.create({ key: 'ninja_touchdown', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchdown_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'ninja_touchside', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'ninja_touchside_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'samurai_stand', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'samurai_stand_', end: 1}), repeat: 0 });
+        this.anims.create({ key: 'crossbow_stand', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'samurai_stand_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'magistrate_stand', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'magistrate_stand_', end: 1}), repeat: 0 });
+        this.anims.create({ key: 'royalsamurai_stand', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'royalsamurai_stand_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'blade_spin', frameRate: 1, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'blade_', end: 1}), repeat: 0 });
         this.anims.create({ key: 'samurai_killed', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'samurai_killed_', end: 10}), repeat: 0 });
         this.anims.create({ key: 'magistrate_killed', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'magistrate_killed_', end: 10}), repeat: 0 });
+        this.anims.create({ key: 'royalsamurai_killed', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'royalsamurai_killed_', end: 10}), repeat: 0 });
+        this.anims.create({ key: 'royalsamurai_swing', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'royalsamurai_swing_', end: 4}), repeat: 0 });
         this.anims.create({ key: 'flag_sway', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'bannersway_', end: 58}), repeat: -1 });
         this.anims.create({ key: 'puff', frameRate: 16, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'effects_puff_', end: 4 }), repeat: 0 });
         this.anims.create({ key: 'disappear', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'disappear_', end: 29 }), repeat: 0 });
         this.anims.create({ key: 'pot_break', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'potbreak_', end: 58 }), repeat: 0 });
+        this.anims.create({ key: 'bolt_fire', frameRate: 6, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'thing_bolt_fire_', end: 3 }), repeat: -1 });
+        this.anims.create({ key: 'smallburst', frameRate: 6, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'smallburst_', end: 16 }), repeat: 0 });
+        this.anims.create({ key: 'grass_sway', frameRate: 30, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'grass_', end: 59 }), repeat: -1 });
     }
     create() {
         //@ts-ignore

@@ -42,6 +42,138 @@
                  "width":0,
                  "x":422.833333333334,
                  "y":106.833333333333
+                }, 
+                {
+                 "height":0,
+                 "id":9,
+                 "name":"bolt",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"angle",
+                         "type":"int",
+                         "value":180
+                        }, 
+                        {
+                         "name":"firedelay",
+                         "type":"int",
+                         "value":2000
+                        }, 
+                        {
+                         "name":"fireoffset",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"int",
+                         "value":200
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":185.333333333333,
+                 "y":87.3333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":10,
+                 "name":"bolt",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"angle",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"firedelay",
+                         "type":"int",
+                         "value":2000
+                        }, 
+                        {
+                         "name":"fireoffset",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"int",
+                         "value":200
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":295.333333333333,
+                 "y":90
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"bolt",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"angle",
+                         "type":"int",
+                         "value":90
+                        }, 
+                        {
+                         "name":"firedelay",
+                         "type":"int",
+                         "value":2000
+                        }, 
+                        {
+                         "name":"fireoffset",
+                         "type":"int",
+                         "value":1500
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"int",
+                         "value":200
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":186,
+                 "y":120.666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":12,
+                 "name":"bolt",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"angle",
+                         "type":"int",
+                         "value":90
+                        }, 
+                        {
+                         "name":"firedelay",
+                         "type":"int",
+                         "value":2000
+                        }, 
+                        {
+                         "name":"fireoffset",
+                         "type":"int",
+                         "value":500
+                        }, 
+                        {
+                         "name":"velocity",
+                         "type":"int",
+                         "value":200
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":298,
+                 "y":115.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -50,7 +182,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":9,
+ "nextobjectid":13,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.4",
@@ -173,7 +305,7 @@
                         {
                          "name":"collide",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {
@@ -182,7 +314,7 @@
                         {
                          "name":"collide",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {
