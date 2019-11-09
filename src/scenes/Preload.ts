@@ -1,3 +1,5 @@
+import { C } from "../C";
+
 export class Preload extends Phaser.Scene {
     preload() {
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
@@ -72,7 +74,10 @@ export class Preload extends Phaser.Scene {
         this.load.setBaseURL('./assets/')
         //Load stuff here.
         this.load.spritesheet('ninja', 'ninja.png', {frameWidth:32});
-        this.load.tilemapTiledJSON('testlevel');
+        
+        C.Levels.forEach(element => {
+            this.load.tilemapTiledJSON(element);
+        });
         this.load.image('tileset');
         this.load.atlas('mainatlas', 'atlas.png', 'atlas.json');
 

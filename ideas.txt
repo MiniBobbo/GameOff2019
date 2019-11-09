@@ -1,0 +1,12 @@
+Win conditions:
+Kill all the samurai
+Reach the flag
+Steal the item
+Assassinate the leader, Leave everyone else alive
+Burn the supplies
+
+
+Powerups (Placed in the level and are used immediately when picked up)
+Firebomb
+Portal
+Throwing star

@@ -1,6 +1,8 @@
+import { TsetScene } from "./scenes/TestScene";
+
 export class LevelData {
     Name!:string;
-    Completed!:boolean;
     Goal!:string;
-    BestTime!:number;
+    WinCondition!:(scene:TsetScene)=>boolean;
+
 }

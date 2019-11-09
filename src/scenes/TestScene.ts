@@ -3,6 +3,7 @@ import { Ninja } from "../entities/Ninja";
 import { C } from "../C";
 import { Samurai } from "../entities/Samurai";
 import { Flag } from "../entities/Flag";
+import { MenuScene } from "./MenuScene";
 
 export class TsetScene extends Phaser.Scene {
     player!: Ninja;
@@ -34,7 +35,7 @@ export class TsetScene extends Phaser.Scene {
     create() {
         this.ResetLevel();
         this.player = new Ninja(this);
-        let map = this.make.tilemap({ key: 'testlevel' });
+        let map = this.make.tilemap({ key: C.CurrentLevel });
         const tileset = map.addTilesetImage("tileset", "tileset");
         const bg  = map.createDynamicLayer("collide", tileset, 0, 0);
         bg.setCollisionByProperty({collide:true}, true);
@@ -57,22 +58,21 @@ export class TsetScene extends Phaser.Scene {
         this.player.sprite.emit('resume');
         this.debug = this.add.text(0,0, '');
         this.debug.setScrollFactor(0,0);
-        this.goal = this.add.text(0, 250, 'Kill the samurai then reach the flag', {align:'center'})
-        .setFontFamily('"Yeon Sung"')
+        this.goal = this.add.text(0, 5, C.CurrentLevelData.Goal, {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
         .setFontSize(18)
+        .setStroke('#000000', 3)
         // .setWordWrapWidth(480)
         .setFixedSize(480, 0).setScrollFactor(0,0);
 
-        this.timeText = this.add.text(5, 5, '0.00', {color:0xff0000})
-        .setFontFamily('"Yeon Sung"')
+        this.timeText = this.add.text(5, 250, '0.00', {color:0xff0000, fontFamily: '"Yeon Sung", "Arial"'})
         .setFontSize(18 )
         // .setWordWrapWidth(480)
         .setScrollFactor(0,0).setStroke('#ff0000', 3);
         // .setShadow(2,2,'0x000000', 2,false, false);
     
-        this.centerText = this.add.text(0, 111, '', {align:'center'})
-        .setFontFamily('"Yeon Sung"')
+        this.centerText = this.add.text(0, 111, '', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
         .setFontSize(48)
+        .setStroke('#000000', 5)
         .setFixedSize(480, 0)
         .setScrollFactor(0,0);
         
@@ -114,7 +114,7 @@ export class TsetScene extends Phaser.Scene {
             this.centerText.text = message;
             this.centerText.alpha = 1;
             this.tweens.add({
-                delay:100,
+                delay:200,
                 duration:100, 
                 targets:[this.centerText],
                 alpha:0
@@ -222,24 +222,24 @@ export class TsetScene extends Phaser.Scene {
         this.player.Resume();
         this.events.emit('centertext', '3');
         this.time.addEvent({
-            delay:250,
+            delay:350,
             callbackScope:this,
             callback:() => {this.events.emit('centertext', '2');}
         });
         this.time.addEvent({
-            delay:500,
+            delay:700,
             callbackScope:this,
             callback:() => {this.events.emit('centertext', '1');}
         });
         this.time.addEvent({
-            delay:750,
+            delay:1050,
             callbackScope:this,
             callback:() => {this.events.emit('centertext', 'GO');  this.levelStarted = true;}
         });
     }
 
     CheckWinCondition() {
-        if(this.enemiesKilled==2 && this.touchingFlag)
+        if(C.CurrentLevelData.WinCondition(this))
             this.FinishLevel();
     }
 
@@ -251,11 +251,23 @@ export class TsetScene extends Phaser.Scene {
     FinishLevel() {
         this.levelStarted = false;
         this.centerText.alpha = 1;
-        this.centerText.setText('COMPLETE');
+        this.centerText.setText('COMPLETE'); 
+        let bestTime = localStorage.getItem(C.CurrentLevel);
+        if(bestTime == null || parseFloat(bestTime) > parseFloat(this.timeText.text)) {
+            this.add.text(0, 170, '** NEW RECORD **', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
+            .setFontSize(30)
+            .setColor('#ff0000')
+            .setStroke('#000000', 5)
+            .setFixedSize(480, 0)
+            .setScrollFactor(0,0); 
+            localStorage.setItem(C.CurrentLevel, this.timeText.text);          
+        }
         this.time.addEvent({
             delay:4000,
             callbackScope:this,
-            callback:() => {this.scene.start('menu');}
+            callback:() => {
+                this.scene.start('menu');
+            }
         });
     }
     SamuraiKilled(arg0: string, SamuraiKilled: any, arg2: this) {
