@@ -9,7 +9,7 @@ export class Pot extends Entity {
         this.sprite.on('ninjahit', this.CheckHit, this);
         this.sprite.setFrame('thing_pot_0');
         this.sprite.setCircle(8);
-        this.sprite.on('collide', this.Collide, this)
+        this.sprite.on('collide', this.Collide, this);
 
     }
 

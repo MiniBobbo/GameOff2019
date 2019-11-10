@@ -1,16 +1,16 @@
 import { Entity } from "./Entity";
 
-export class Flag extends Entity {
+export class Well extends Entity {
     constructor(scene:Phaser.Scene) {
         super(scene);
-        this.sprite.name = 'flag';
+        this.sprite.name = 'well';
         this.sprite.on('ninjahit', this.CheckHit, this);
-        this.sprite.setSize(10,20);
-        this.PlayAnimation('sway');
-        this.sprite.body.offset.y += 6;
+        this.sprite.setFrame('well');
+        this.sprite.setSize(32,32);
     }
 
     CheckHit() {
         this.scene.events.emit('touchflag');
     }
+
 }

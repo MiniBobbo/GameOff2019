@@ -11,11 +11,13 @@ import { Attack } from "../entities/Attack";
 import { Crossbow } from "../entities/Crossbow";
 import { Grass } from "../entities/Grass";
 import { RoyalSamurai } from "../entities/RoyalSamurai";
+import { ObjectFactory } from "../ObjectFactory";
 
 export class TsetScene extends Phaser.Scene {
     player!: Ninja;
     camobj!:Phaser.GameObjects.Graphics;
     waitOnInput:boolean = false;
+    bg!:Phaser.Tilemaps.DynamicTilemapLayer;
     debug!:Phaser.GameObjects.Text;
     puff!:Phaser.GameObjects.Sprite;
     goal!:Phaser.GameObjects.Text;
@@ -28,7 +30,7 @@ export class TsetScene extends Phaser.Scene {
     magistratesKilled:number = 0;
     royalSamuraiKilled:number = 0;
     touchingFlag:boolean = false;
-    thingCollected:boolean = false;
+    thingCollected:number = 0;
     loudnoise:boolean = false;
     private ninjaDead:boolean = false;
     attacks!:Array<Attack>;
@@ -58,6 +60,7 @@ export class TsetScene extends Phaser.Scene {
         let map = this.make.tilemap({ key: C.CurrentLevel });
         const tileset = map.addTilesetImage("tileset", "tileset");
         const bg  = map.createDynamicLayer("collide", tileset, 0, 0);
+        this.bg = bg;
         bg.setCollisionByProperty({collide:true}, true);
         this.camobj = this.add.graphics({});
 
@@ -101,83 +104,13 @@ export class TsetScene extends Phaser.Scene {
         .setFixedSize(480, 0)
         .setScrollFactor(0,0).setDepth(50);
         
-        this.PlaceObjects(map);
+        ObjectFactory.PlaceObjects(map, this);
 
         this.CreateEvents();
         this.StartLevel();
 
     }
 
-    PlaceObjects(map: Phaser.Tilemaps.Tilemap) {
-        let o = map.getObjectLayer('o');
-        let ninja:any = o.objects.find( (obj:any) =>{return obj.name == 'ninja'}  );
-        let ypos = Math.round(ninja.y / C.TILE_SIZE) * C.TILE_SIZE;
-        this.player.sprite.setPosition(ninja.x, ypos);
-
-        let sams = o.objects.filter( (obj:any) => {return obj.name == 'samurai'});
-        sams.forEach( (o:any) => {
-            let s = new Samurai(this);
-            s.sprite.setPosition(o.x,o.y);
-            this.allSprites.push(s.sprite);
-            if(o.properties != null && o.properties.find((p:any)=> {return p.name == 'flipX'}) != null)
-                s.sprite.flipX = true;
-        });
-        let mag = o.objects.filter( (obj:any) => {return obj.name == 'magistrate'});
-        mag.forEach( (o:any) => {
-            let s = new Magistrate(this);
-            s.sprite.setPosition(o.x,o.y);
-            this.allSprites.push(s.sprite);
-        });
-        let rs = o.objects.filter( (obj:any) => {return obj.name == 'royalsamurai'});
-        rs.forEach( (o:any) => {
-            let s = new RoyalSamurai(this);
-            s.sprite.setPosition(o.x,o.y);
-            this.allSprites.push(s.sprite);
-        });
-        let pots = o.objects.filter( (obj:any) => {return obj.name == 'pot'});
-        pots.forEach( (o:any) => {
-            let p = new Pot(this);
-            let ypos = Math.round(o.y / C.TILE_SIZE) * C.TILE_SIZE;
-            p.sprite.setPosition(o.x,ypos - 8);
-            this.allSprites.push(p.sprite);
-        });
-        let blades = o.objects.filter( (obj:any) => {return obj.name == 'blade'});
-        blades.forEach( (o:any) => {
-            let s = new LargeBlade(this);
-            s.sprite.setPosition(o.x,o.y);
-            this.allSprites.push(s.sprite);
-        });
-        let grasses = o.objects.filter( (obj:any) => {return obj.name == 'grass'});
-        grasses.forEach( (o:any) => {
-            let s = new Grass(this);
-            s.sprite.setDepth(6);
-            let ypos = Math.round(o.y / C.TILE_SIZE) * C.TILE_SIZE;
-            let xpos = Math.round(o.x / C.TILE_SIZE) * C.TILE_SIZE;
-
-            s.sprite.setPosition(xpos,ypos+8);
-            this.allSprites.push(s.sprite);
-        });
-        let bolts = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'bolt'});
-        bolts.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
-            let s = new Crossbow(this);
-            s.sprite.setPosition(o.x,o.y);
-            let angle = o.properties.find((p:any) => {return p.name == 'angle'});
-            let vel = o.properties.find((p:any) => {return p.name == 'velocity'});
-            let d = o.properties.find((p:any) => {return p.name == 'firedelay'});
-            let off = o.properties.find((p:any) => {return p.name == 'fireoffset'});
-            s.ArmCrossbow(angle.value, vel.value, d.value, off.value);
-            this.allSprites.push(s.sprite);
-        });
-
-        let flag = o.objects.find( (obj:any) => {return obj.name == 'flag';});
-        if(flag != null) {
-            let f = new Flag(this);
-            //@ts-ignore
-            let ypos = Math.round(flag.y / C.TILE_SIZE) * C.TILE_SIZE;
-            f.sprite.setPosition(flag.x, ypos);
-            this.allSprites.push(f.sprite); 
-        }
-    }
 
     CreateEvents() {
         this.events.on('JumpInput', this.JumpInput, this);
@@ -197,11 +130,13 @@ export class TsetScene extends Phaser.Scene {
         this.events.on('magistratekilled', this.MagistrateKilled, this);
         this.events.on('royalsamuraikilled', this.RoyalSamuraiKilled, this);
         this.events.on('touchflag', this.TouchFlag, this);
+        this.events.on('touchthing', this.TouchThing, this);
         this.events.on('ninjadead', this.NinjaDead, this);
         this.events.on('noise', this.Noise, this);
         
     }
     Destroy() {
+        this.events.removeListener('touchthing', this.TouchThing, this);
         this.events.removeListener('royalsamuraikilled', this.RoyalSamuraiKilled, this);
         this.events.removeListener('touchflag', this.TouchFlag, this);
         this.events.removeListener('pause');
@@ -219,6 +154,8 @@ export class TsetScene extends Phaser.Scene {
         // this.camobj.setPosition((this.input.mousePointer.worldX - this.player.sprite.x)/2, (this.input.mousePointer.worldY - this.player.sprite.y) /2);
         this.camobj.setPosition((this.player.sprite.x), (this.player.sprite.y));
         // this.debug.text = `x: ${this.camobj.x}, y: ${this.camobj.y}`;
+        if(this.player.sprite.y > this.bg.height)
+            this.events.emit('ninjadead');
         if(this.levelStarted && !this.ninjaDead) {
             this.timer += dt;
             this.timeText.text = (this.timer/1000).toFixed(2);
@@ -276,21 +213,6 @@ export class TsetScene extends Phaser.Scene {
         this.player.sprite.emit('resume');
         this.waitOnInput = false;
         this.player.prepareForJump = false;
-        // if(this.player.vertical) {
-        //     this.player.sprite.scaleY = 1 + C.JUMP_SCALE;
-        //     this.player.sprite.scaleX = C.JUMP_SCALE;
-        // } else {
-        //     this.player.sprite.scaleX = 1 + C.JUMP_SCALE;
-        //     this.player.sprite.scaleY = C.JUMP_SCALE;
-
-        // }
-        // this.tweens.add({
-        //     duration:200,
-        //     targets:[this.player.sprite],
-        //     scaleX:1,
-        //     scaleY:1
-        // });
-
     }
 
     Puff(direction:number) {
@@ -426,6 +348,12 @@ export class TsetScene extends Phaser.Scene {
             this.effects.push(a);
         }
         return a;
-    }           
+    }          
+    TouchThing(arg0: string, TouchThing: any, arg2: this) {
+        console.log('Thing collected');
+        this.thingCollected++;
+        this.CheckWinCondition();
+    }
+ 
 
 }

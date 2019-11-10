@@ -8,7 +8,8 @@ Burn the supplies
 -Avoid the traps
 -Two crossbows shooting down a very narrow corridor
 -Attack from stealth
-Climb the tower without falling back down
+Sprits that pursue you through the level.
+-Climb the tower without falling back down
 
 
 Powerups (Placed in the level and are used immediately when picked up)

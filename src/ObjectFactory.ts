@@ -8,6 +8,9 @@ import { LargeBlade } from "./entities/LargeBlade";
 import { Grass } from "./entities/Grass";
 import { Crossbow } from "./entities/Crossbow";
 import { Flag } from "./entities/Flag";
+import { Well } from "./entities/Well";
+import { Poison } from "./entities/Poison";
+import { Glass } from "./entities/Glass";
 
 export class ObjectFactory {
     static PlaceObjects(map: Phaser.Tilemaps.Tilemap, ts:TsetScene) {
@@ -70,6 +73,20 @@ export class ObjectFactory {
             s.ArmCrossbow(angle.value, vel.value, d.value, off.value);
             ts.allSprites.push(s.sprite);
         });
+        let poisons = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'poison'});
+        poisons.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
+            let p = new Poison(ts);
+            p.sprite.setPosition(o.x,o.y);
+            ts.allSprites.push(p.sprite);
+        });
+        let glasses = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'glass'});
+        glasses.forEach( (o:any) => {
+            let g = new Glass(ts);
+            C.CenterOfTile(o);
+            
+            g.sprite.setPosition(o.x,o.y);
+            ts.allSprites.push(g.sprite);
+        });
 
         let flag = o.objects.find( (obj:any) => {return obj.name == 'flag';});
         if(flag != null) {
@@ -78,6 +95,14 @@ export class ObjectFactory {
             let ypos = Math.round(flag.y / C.TILE_SIZE) * C.TILE_SIZE;
             f.sprite.setPosition(flag.x, ypos);
             ts.allSprites.push(f.sprite); 
+        }
+        let well = o.objects.find( (obj:any) => {return obj.name == 'well';});
+        if(well != null) {
+            let w = new Well(ts);
+            //@ts-ignore
+            let ypos = Math.round(well.y / C.TILE_SIZE) * C.TILE_SIZE;
+            w.sprite.setPosition(well.x, ypos);
+            ts.allSprites.push(w.sprite); 
         }
     }
 
