@@ -6,12 +6,24 @@ export class MenuScene extends Phaser.Scene {
     levels!:Array<Phaser.GameObjects.Container>;
     totalTimes:number = 0;
     AllLevelsComplete = true;
+    music!:Phaser.Sound.BaseSound;
+    BoxHeight:number = 45;
+    BoxWidth:number = 60;
 
     preload() {
 
     }
 
     create() {
+        if(C.music == null) {
+            C.music = this.sound.add('music');
+            C.music.play();
+            C.music.on('complete', () => {
+                C.music.play();
+                console.log('Music finished');
+            }, this);
+        }
+
         this.AllLevelsComplete = true;
         this.totalTimes = 0;
         let title = this.add.text(0,30,'Ninja Training Simulator', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
@@ -33,7 +45,7 @@ export class MenuScene extends Phaser.Scene {
                 y:0
             });
             g.lineStyle(2, 0xffffff);
-            g.strokeRect(0,0, 90, 45);
+            g.strokeRect(0,0, this.BoxWidth, 45);
             group.add(g);
             let time = localStorage.getItem(element);
             if (time == null) {
@@ -44,8 +56,8 @@ export class MenuScene extends Phaser.Scene {
             } 
 
 
-            let start = this.add.text(2,2,`${element}\n${time}`, {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
-            .setFixedSize(90,45).setInteractive();
+            let start = this.add.text(0,2,`${element}\n${time} s`, {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
+            .setFixedSize(this.BoxWidth,45).setInteractive();
             start.on('pointerdown', () => {
                 C.CurrentLevel = element;
                 this.StartLevel();
@@ -56,15 +68,15 @@ export class MenuScene extends Phaser.Scene {
 
         
         Phaser.Actions.GridAlign(this.levels, {
-            x:90,
+            x:50,
             y:110,
-            cellWidth:100,
+            cellWidth:65,
             cellHeight:50,
-            width: 4,
+            width: 7,
             height:3
         });
 
-        let totalTime = this.add.text(0,240,'Total Time: ---', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
+        let totalTime = this.add.text(0,5,'Total Time: ---', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
         .setFixedSize(480,0)
         .setFontSize(20)
         .setWordWrapWidth(480);
@@ -73,7 +85,7 @@ export class MenuScene extends Phaser.Scene {
         .setFontSize(12)
         .setWordWrapWidth(120);
         if(this.AllLevelsComplete) {
-            totalTime.text = `Total Time: ${this.totalTimes.toFixed(2)}`;
+            totalTime.text = `Total Time: ${this.totalTimes.toFixed(2)} s`;
         }
 
     }

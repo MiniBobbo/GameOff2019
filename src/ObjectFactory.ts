@@ -81,11 +81,26 @@ export class ObjectFactory {
         });
         let glasses = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'glass'});
         glasses.forEach( (o:any) => {
-            let g = new Glass(ts);
-            C.CenterOfTile(o);
-            
-            g.sprite.setPosition(o.x,o.y);
-            ts.allSprites.push(g.sprite);
+            let linkedGlass:Array<Glass> = [];
+            let xpos = o.x;
+            let ypos = o.y;
+            C.CenterOfTile({x:xpos, y:ypos});
+            // xpos += C.TILE_SIZE/2;
+            ypos += C.TILE_SIZE/2;
+
+            while (ypos < o.height + o.y) {
+                let g = new Glass(ts);
+                g.sprite.setPosition(xpos, ypos);
+                ts.allSprites.push(g.sprite);
+                linkedGlass.push(g);
+                ypos += C.TILE_SIZE;
+            }
+
+            linkedGlass.forEach(element => {
+                element.LinkGlass(linkedGlass);
+            });
+
+
         });
 
         let flag = o.objects.find( (obj:any) => {return obj.name == 'flag';});

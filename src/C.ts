@@ -7,11 +7,13 @@ export class C {
     static JUMP_SCALE:number = .5;
     static TILE_SIZE:number = 16;
 
+    static music:Phaser.Sound.BaseSound;
+
     static CurrentLevel = '2';
     static CurrentLevelData:LevelData;
 
     static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6', 'Level 7', "Level 8", 
-    'Level 9', 'Level 10', 'Level 11', 'Level 12'];
+    'Level 9', 'Level 10', 'Level 11', 'Level 12', 'Level 13'];
     static WinConditions:Array<LevelData>;
 
     static levelData:Array<LevelData>;
@@ -55,7 +57,7 @@ export class C {
             return true;
             return false;
         });
-        C.CreateLevelCondition('Level 6', 'Get to the flag.  Be SILENT', (level:TsetScene) =>{
+        C.CreateLevelCondition('Level 6', 'Get to the flag.  Be SILENT.', (level:TsetScene) =>{
             if(level.enemiesKilled == 1 || level.loudnoise) {
                 level.events.emit('ninjadead');
             }
@@ -93,10 +95,18 @@ export class C {
             return true;
             return false;
         });
+        C.CreateLevelCondition('Level 13', 'Get to the flag.  Be SILENT.', (level:TsetScene) =>{
+            if(level.enemiesKilled == 1 || level.loudnoise) {
+                level.events.emit('ninjadead');
+            }
+            if(level.touchingFlag)
+            return true;
+            return false;
+        });
 
     }
 
-    static CenterOfTile(o:any ) {
+    static CenterOfTile(o:{x:number, y:number} ) {
         let xTile = Math.floor(o.x / C.TILE_SIZE);
         let yTile = Math.floor(o.y / C.TILE_SIZE);
         o.y = yTile * C.TILE_SIZE + (C.TILE_SIZE/2);

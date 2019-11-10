@@ -10,7 +10,9 @@ Burn the supplies
 -Attack from stealth
 Sprits that pursue you through the level.
 -Climb the tower without falling back down
-
+Moving platforms
+Glass makes noise
+Right click to watch your best time.
 
 Powerups (Placed in the level and are used immediately when picked up)
 Firebomb

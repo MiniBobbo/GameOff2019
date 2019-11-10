@@ -80,6 +80,7 @@ export class Preload extends Phaser.Scene {
         });
         this.load.image('tileset');
         this.load.atlas('mainatlas', 'atlas.png', 'atlas.json');
+        this.load.audio('music', ['./music/shinobi.mp3', './music/shinobi.ogg'], {loop:true, volume:.5});
 
     }
 
