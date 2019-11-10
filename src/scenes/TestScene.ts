@@ -28,6 +28,7 @@ export class TsetScene extends Phaser.Scene {
     magistratesKilled:number = 0;
     royalSamuraiKilled:number = 0;
     touchingFlag:boolean = false;
+    thingCollected:boolean = false;
     loudnoise:boolean = false;
     private ninjaDead:boolean = false;
     attacks!:Array<Attack>;
@@ -72,7 +73,11 @@ export class TsetScene extends Phaser.Scene {
         this.cameras.main.setBounds(0,0,bg.width, bg.height);
 
         this.input.on('pointerdown', this.Clicked, this);
-
+        this.input.keyboard.on('keydown_R', function (event:any) {
+            //@ts-ignore
+            this.scene.start('restart');
+    
+        }, this);
 
         this.player.sprite.emit('resume');
         this.debug = this.add.text(0,0, '');
@@ -218,6 +223,7 @@ export class TsetScene extends Phaser.Scene {
             this.timer += dt;
             this.timeText.text = (this.timer/1000).toFixed(2);
         }
+
 
     }
 

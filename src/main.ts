@@ -4,6 +4,7 @@ import { TsetScene } from "./scenes/TestScene";
 import { MenuScene } from "./scenes/MenuScene";
 import { C } from "./C";
 import { LevelData } from "./LevelData";
+import { RestartScene } from "./scenes/RestartScene";
 
 class Main extends Phaser.Game {
     constructor() {
@@ -28,6 +29,7 @@ class Main extends Phaser.Game {
 
         C.levelData = [];
         C.CreateLevelData();
+        this.scene.add('restart', RestartScene, false);
         this.scene.add('preload', Preload, false);
         this.scene.add('menu', MenuScene, false);
         this.scene.start('preload');

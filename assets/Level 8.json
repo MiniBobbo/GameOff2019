@@ -57,7 +57,7 @@
                         {
                          "name":"firedelay",
                          "type":"int",
-                         "value":1000
+                         "value":1300
                         }, 
                         {
                          "name":"fireoffset",
@@ -90,12 +90,12 @@
                         {
                          "name":"firedelay",
                          "type":"int",
-                         "value":1000
+                         "value":1300
                         }, 
                         {
                          "name":"fireoffset",
                          "type":"int",
-                         "value":500
+                         "value":650
                         }, 
                         {
                          "name":"velocity",

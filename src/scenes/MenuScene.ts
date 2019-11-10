@@ -68,6 +68,10 @@ export class MenuScene extends Phaser.Scene {
         .setFixedSize(480,0)
         .setFontSize(20)
         .setWordWrapWidth(480);
+        let hint = this.add.text(3,240,'Press R to restart a level', { fontFamily: '"Yeon Sung", "Arial"'})
+        .setFixedSize(120,0)
+        .setFontSize(12)
+        .setWordWrapWidth(120);
         if(this.AllLevelsComplete) {
             totalTime.text = `Total Time: ${this.totalTimes.toFixed(2)}`;
         }
