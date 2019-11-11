@@ -42,6 +42,42 @@
                  "width":0,
                  "x":1000,
                  "y":61.75
+                }, 
+                {
+                 "height":0,
+                 "id":15,
+                 "name":"demon",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":54,
+                 "y":147
+                }, 
+                {
+                 "height":0,
+                 "id":17,
+                 "name":"demon",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":283,
+                 "y":214
+                }, 
+                {
+                 "height":0,
+                 "id":18,
+                 "name":"demon",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":608,
+                 "y":96
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -50,7 +86,7 @@
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":15,
+ "nextobjectid":19,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.4",

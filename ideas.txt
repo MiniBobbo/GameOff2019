@@ -13,6 +13,8 @@ Sprits that pursue you through the level.
 Moving platforms
 Glass makes noise
 Right click to watch your best time.
+Bouncing blades
+Holding down the mouse button will jump as soon as you land or allow a fudge factor around the player for allowing jumps slightly before contact with the wll or gound.
 
 Powerups (Placed in the level and are used immediately when picked up)
 Firebomb

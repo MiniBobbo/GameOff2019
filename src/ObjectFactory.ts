@@ -11,6 +11,7 @@ import { Flag } from "./entities/Flag";
 import { Well } from "./entities/Well";
 import { Poison } from "./entities/Poison";
 import { Glass } from "./entities/Glass";
+import { Demon } from "./entities/Demon";
 
 export class ObjectFactory {
     static PlaceObjects(map: Phaser.Tilemaps.Tilemap, ts:TsetScene) {
@@ -26,6 +27,13 @@ export class ObjectFactory {
             ts.allSprites.push(s.sprite);
             if(o.properties != null && o.properties.find((p:any)=> {return p.name == 'flipX'}) != null)
                 s.sprite.flipX = true;
+        });
+        let demons = o.objects.filter( (obj:any) => {return obj.name == 'demon'});
+        demons.forEach( (o:any) => {
+            let d = new Demon(ts);
+            d.sprite.setPosition(o.x,o.y);
+            if(o.properties != null && o.properties.find((p:any)=> {return p.name == 'flipX'}) != null)
+                d.sprite.flipX = true;
         });
         let mag = o.objects.filter( (obj:any) => {return obj.name == 'magistrate'});
         mag.forEach( (o:any) => {

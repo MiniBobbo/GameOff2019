@@ -13,7 +13,7 @@ export class C {
     static CurrentLevelData:LevelData;
 
     static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6', 'Level 7', "Level 8", 
-    'Level 9', 'Level 10', 'Level 11', 'Level 12', 'Level 13'];
+    'Level 9', 'Level 10', 'Level 11', 'Level 12', 'Level 13', 'Level 14'];
     static WinConditions:Array<LevelData>;
 
     static levelData:Array<LevelData>;
@@ -99,6 +99,11 @@ export class C {
             if(level.enemiesKilled == 1 || level.loudnoise) {
                 level.events.emit('ninjadead');
             }
+            if(level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 14', 'Run.', (level:TsetScene) =>{
             if(level.touchingFlag)
             return true;
             return false;
