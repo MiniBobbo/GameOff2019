@@ -6,6 +6,7 @@ export class C {
     static JUMP_STR:number = 500;
     static JUMP_SCALE:number = .5;
     static TILE_SIZE:number = 16;
+    static ALLOW_MOUSE_HOLD:boolean = false;
 
     static music:Phaser.Sound.BaseSound;
 

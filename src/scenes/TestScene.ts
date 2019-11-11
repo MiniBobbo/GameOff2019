@@ -17,6 +17,7 @@ export class TsetScene extends Phaser.Scene {
     player!: Ninja;
     camobj!:Phaser.GameObjects.Graphics;
     waitOnInput:boolean = false;
+    mousedown:boolean = false;
     bg!:Phaser.Tilemaps.DynamicTilemapLayer;
     debug!:Phaser.GameObjects.Text;
     puff!:Phaser.GameObjects.Sprite;
@@ -24,6 +25,7 @@ export class TsetScene extends Phaser.Scene {
     centerText!:Phaser.GameObjects.Text;
     timeText!:Phaser.GameObjects.Text;
     timer:number = 0;
+    totalJumps:number = 0;
     levelStarted:boolean = false;
     allSprites!:Array<Phaser.GameObjects.GameObject>;
     enemiesKilled:number = 0;
@@ -48,6 +50,7 @@ export class TsetScene extends Phaser.Scene {
         this.waitOnInput = false;
         this.ninjaDead = false;
         this.loudnoise = false;
+        this.mousedown = false;
     }
 
     create() {
@@ -75,7 +78,8 @@ export class TsetScene extends Phaser.Scene {
         this.cameras.main.startFollow(this.camobj);
         this.cameras.main.setBounds(0,0,bg.width, bg.height);
 
-        this.input.on('pointerdown', this.Clicked, this);
+        this.input.on('pointerdown', () => {this.mousedown = true; this.Clicked();}, this);
+        this.input.on('pointerup', () => {this.mousedown = false;}, this);
         this.input.keyboard.on('keydown_R', function (event:any) {
             //@ts-ignore
             this.scene.start('restart');
@@ -136,6 +140,8 @@ export class TsetScene extends Phaser.Scene {
         
     }
     Destroy() {
+        this.input.removeListener('pointerdown', () => {this.mousedown = true;}, this);
+        this.input.removeListener('pointerup', () => {this.mousedown = false;}, this);
         this.events.removeListener('touchthing', this.TouchThing, this);
         this.events.removeListener('royalsamuraikilled', this.RoyalSamuraiKilled, this);
         this.events.removeListener('touchflag', this.TouchFlag, this);
@@ -151,6 +157,8 @@ export class TsetScene extends Phaser.Scene {
 
     update(time:number, dt:number) {
         this.touchingFlag = false;
+        if(this.mousedown && C.ALLOW_MOUSE_HOLD)
+            this.Clicked();
         // this.camobj.setPosition((this.input.mousePointer.worldX - this.player.sprite.x)/2, (this.input.mousePointer.worldY - this.player.sprite.y) /2);
         this.camobj.setPosition((this.player.sprite.x), (this.player.sprite.y));
         // this.debug.text = `x: ${this.camobj.x}, y: ${this.camobj.y}`;
@@ -181,7 +189,7 @@ export class TsetScene extends Phaser.Scene {
         // this.events.emit('centertext', ['Jumped']);
         if(this.ninjaDead || !this.waitOnInput || !this.levelStarted) 
             return;
-
+        this.totalJumps++;
         let a = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, this.input.mousePointer.worldX, this.input.mousePointer.worldY);
         a = Phaser.Math.RadToDeg(a);
         // console.log(`Angle: ${a}`);
@@ -238,7 +246,8 @@ export class TsetScene extends Phaser.Scene {
         this.time.addEvent({
             delay:1050,
             callbackScope:this,
-            callback:() => {this.events.emit('centertext', 'GO');  this.levelStarted = true;}
+            callback:() => {this.events.emit('centertext', 'GO');  this.levelStarted = true;
+        }
         });
     }
 
@@ -268,6 +277,13 @@ export class TsetScene extends Phaser.Scene {
             .setScrollFactor(0,0); 
             localStorage.setItem(C.CurrentLevel, this.timeText.text);          
         }
+        this.add.text(0, 210, `Total jumps: ${this.totalJumps}`, {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
+        .setFontSize(18)
+        .setColor('#ffffff')
+        .setStroke('#000000', 5)
+        .setFixedSize(480, 0)
+        .setScrollFactor(0,0); 
+
         this.time.addEvent({
             delay:4000,
             callbackScope:this,
