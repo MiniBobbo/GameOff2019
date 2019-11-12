@@ -7,12 +7,15 @@ export class C {
     static JUMP_SCALE:number = .5;
     static TILE_SIZE:number = 16;
     static ALLOW_MOUSE_HOLD:boolean = false;
+    static volume:number = .5;
+    static sfx:number = .5;
 
+    static songnum:number = 0;
     static music:Phaser.Sound.BaseSound;
 
     static CurrentLevel = '2';
     static CurrentLevelData:LevelData;
-
+    static songs:Array<string> = ['Shinobi', 'Danger Room', 'Meltdown', 'Wooly Wanderer Remix', 'Wooly Wanderer', 'Wooly Wanderer Stealth', 'Wooly Wanderer Battle', 'Wingman', 'Wingman Battle', 'Wingman Boss'];
     static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6', 'Level 7', "Level 8", 
     'Level 9', 'Level 10', 'Level 11', 'Level 12', 'Level 13', 'Level 14'];
     static WinConditions:Array<LevelData>;

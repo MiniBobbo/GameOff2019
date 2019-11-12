@@ -16,7 +16,7 @@ export class MenuScene extends Phaser.Scene {
 
     create() {
         if(C.music == null) {
-            C.music = this.sound.add('music');
+            C.music = this.sound.add(C.songs[C.songnum]);
             C.music.play();
             C.music.on('complete', () => {
                 C.music.play();
@@ -29,12 +29,11 @@ export class MenuScene extends Phaser.Scene {
         let title = this.add.text(0,30,'Ninja Training Simulator', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
         .setFixedSize(480,0)
         .setFontSize(40).setWordWrapWidth(480);
-        let clearData = this.add.text(0,0,'Clear Saved Data', { fontFamily: '"Yeon Sung", "Arial"'})
+        let clearData = this.add.text(3,3,'Options', { fontFamily: '"Yeon Sung", "Arial"'})
         .setFontSize(12)
         .setInteractive()
         .on('pointerdown', ()=> {
-            localStorage.clear();
-            this.scene.start('menu');
+            this.scene.start('options');
         }, this);
         this.levels = [];
 

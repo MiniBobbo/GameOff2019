@@ -80,8 +80,17 @@ export class Preload extends Phaser.Scene {
         });
         this.load.image('tileset');
         this.load.atlas('mainatlas', 'atlas.png', 'atlas.json');
-        this.load.audio('music', ['./music/shinobi.mp3', './music/shinobi.ogg'], {loop:true, volume:.5});
-
+        this.load.audio('Shinobi', ['./music/shinobi.mp3', './music/shinobi.ogg'], {loop:true, volume:.5});
+        this.load.audio('Danger Room', ['./music/danger_room.mp3', './music/danger_room.ogg'], {loop:true, volume:.5});
+        this.load.audio('Meltdown', ['./music/meltdown.mp3', './music/meltdown.ogg'], {loop:true, volume:.5});
+        this.load.audio('Wooly Wanderer Remix', ['./music/Wooly Wanderer.mp3', './music/Wooly Wanderer.ogg'], {loop:true, volume:.5});
+        this.load.audio('Wooly Wanderer', ['./music/The_Wooly_Wanderer.mp3', './music/The_Wooly_Wanderer.ogg'], {loop:true, volume:.5});
+        this.load.audio('Wooly Wanderer Stealth', ['./music/stealth_layer.mp3', './music/stealth_layer.ogg'], {loop:true, volume:.5});
+        this.load.audio('Wooly Wanderer Battle', ['./music/battle_layer.mp3', './music/battle_layer.ogg'], {loop:true, volume:.5});
+        this.load.audio('Wingman', ['./music/space_menu.mp3', './music/space_menu.ogg'], {loop:true, volume:.5});
+        this.load.audio('Wingman Battle', ['./music/Space1.mp3', './music/Space1.ogg'], {loop:true, volume:.5});
+        this.load.audio('Wingman Boss', ['./music/pursuer.mp3', './music/pursuer.ogg'], {loop:true, volume:.5});
+        
     }
 
     CreateAnimations() {

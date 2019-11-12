@@ -5,6 +5,7 @@ import { MenuScene } from "./scenes/MenuScene";
 import { C } from "./C";
 import { LevelData } from "./LevelData";
 import { RestartScene } from "./scenes/RestartScene";
+import { OptionsScene } from "./scenes/OptionsScene";
 
 class Main extends Phaser.Game {
     constructor() {
@@ -32,6 +33,7 @@ class Main extends Phaser.Game {
         this.scene.add('restart', RestartScene, false);
         this.scene.add('preload', Preload, false);
         this.scene.add('menu', MenuScene, false);
+        this.scene.add('options', OptionsScene, false);
         this.scene.start('preload');
     }
 }
