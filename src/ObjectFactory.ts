@@ -19,12 +19,12 @@ export class ObjectFactory {
         let o = map.getObjectLayer('o');
         let ninja:any = o.objects.find( (obj:any) =>{return obj.name == 'ninja'}  );
         let ypos = Math.round(ninja.y / C.TILE_SIZE) * C.TILE_SIZE;
-        ts.player.sprite.setPosition(ninja.x, ypos);
+        ts.player.sprite.setPosition(ninja.x, ypos).setDepth(6).setTint(C.GetNinjaColor());
 
         let sams = o.objects.filter( (obj:any) => {return obj.name == 'samurai'});
         sams.forEach( (o:any) => {
             let s = new Samurai(ts);
-            s.sprite.setPosition(o.x,o.y);
+            s.sprite.setPosition(o.x,o.y).setDepth(5);
             ts.allSprites.push(s.sprite);
             if(o.properties != null && o.properties.find((p:any)=> {return p.name == 'flipX'}) != null)
                 s.sprite.flipX = true;
@@ -32,39 +32,39 @@ export class ObjectFactory {
         let demons = o.objects.filter( (obj:any) => {return obj.name == 'demon'});
         demons.forEach( (o:any) => {
             let d = new Demon(ts);
-            d.sprite.setPosition(o.x,o.y);
+            d.sprite.setPosition(o.x,o.y).setDepth(5);
             if(o.properties != null && o.properties.find((p:any)=> {return p.name == 'flipX'}) != null)
                 d.sprite.flipX = true;
         });
         let mag = o.objects.filter( (obj:any) => {return obj.name == 'magistrate'});
         mag.forEach( (o:any) => {
             let s = new Magistrate(ts);
-            s.sprite.setPosition(o.x,o.y);
+            s.sprite.setPosition(o.x,o.y).setDepth(5);
             ts.allSprites.push(s.sprite);
         });
         let rs = o.objects.filter( (obj:any) => {return obj.name == 'royalsamurai'});
         rs.forEach( (o:any) => {
             let s = new RoyalSamurai(ts);
-            s.sprite.setPosition(o.x,o.y);
+            s.sprite.setPosition(o.x,o.y).setDepth(5);
             ts.allSprites.push(s.sprite);
         });
         let pots = o.objects.filter( (obj:any) => {return obj.name == 'pot'});
         pots.forEach( (o:any) => {
             let p = new Pot(ts);
             let ypos = Math.round(o.y / C.TILE_SIZE) * C.TILE_SIZE;
-            p.sprite.setPosition(o.x,ypos - 8);
+            p.sprite.setPosition(o.x,ypos - 8).setDepth(5);
             ts.allSprites.push(p.sprite);
         });
         let blades = o.objects.filter( (obj:any) => {return obj.name == 'blade'});
         blades.forEach( (o:any) => {
             let s = new LargeBlade(ts);
-            s.sprite.setPosition(o.x,o.y);
+            s.sprite.setPosition(o.x,o.y).setDepth(5);
             ts.allSprites.push(s.sprite);
         });
         let grasses = o.objects.filter( (obj:any) => {return obj.name == 'grass'});
         grasses.forEach( (o:any) => {
             let s = new Grass(ts);
-            s.sprite.setDepth(6);
+            s.sprite.setDepth(7);
             let ypos = Math.round(o.y / C.TILE_SIZE) * C.TILE_SIZE;
             let xpos = Math.round(o.x / C.TILE_SIZE) * C.TILE_SIZE;
 
@@ -74,7 +74,7 @@ export class ObjectFactory {
         let bolts = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'bolt'});
         bolts.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
             let s = new Crossbow(ts);
-            s.sprite.setPosition(o.x,o.y);
+            s.sprite.setPosition(o.x,o.y).setDepth(5);
             let angle = o.properties.find((p:any) => {return p.name == 'angle'});
             let vel = o.properties.find((p:any) => {return p.name == 'velocity'});
             let d = o.properties.find((p:any) => {return p.name == 'firedelay'});
@@ -85,17 +85,18 @@ export class ObjectFactory {
         let bblades = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'bblade'});
         bblades.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
             let s = new BouncingBlade(ts);
-            s.sprite.setPosition(o.x,o.y);
+            s.sprite.setPosition(o.x,o.y).setDepth(5);
             let angle = o.properties.find((p:any) => {return p.name == 'angle'});
             let vel = o.properties.find((p:any) => {return p.name == 'velocity'});
             ts.physics.velocityFromAngle(angle.value, vel.value, s.sprite.body.velocity);
-            s.speed.copy(s.sprite.body.velocity);
+            s.lastSpeed.copy(s.sprite.body.velocity);
+            // s.speed.copy(s.sprite.body.velocity);
             ts.allSprites.push(s.sprite);
         });
         let poisons = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'poison'});
         poisons.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
             let p = new Poison(ts);
-            p.sprite.setPosition(o.x,o.y);
+            p.sprite.setPosition(o.x,o.y).setDepth(5);
             ts.allSprites.push(p.sprite);
         });
         let glasses = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'glass'});
@@ -109,7 +110,7 @@ export class ObjectFactory {
 
             while (ypos < o.height + o.y) {
                 let g = new Glass(ts);
-                g.sprite.setPosition(xpos, ypos);
+                g.sprite.setPosition(xpos, ypos).setDepth(5);
                 ts.allSprites.push(g.sprite);
                 linkedGlass.push(g);
                 ypos += C.TILE_SIZE;
@@ -127,7 +128,7 @@ export class ObjectFactory {
             let f = new Flag(ts);
             //@ts-ignore
             let ypos = Math.round(flag.y / C.TILE_SIZE) * C.TILE_SIZE;
-            f.sprite.setPosition(flag.x, ypos);
+            f.sprite.setPosition(flag.x, ypos).setDepth(5);
             ts.allSprites.push(f.sprite); 
         }
         let well = o.objects.find( (obj:any) => {return obj.name == 'well';});
@@ -135,7 +136,7 @@ export class ObjectFactory {
             let w = new Well(ts);
             //@ts-ignore
             let ypos = Math.round(well.y / C.TILE_SIZE) * C.TILE_SIZE;
-            w.sprite.setPosition(well.x, ypos);
+            w.sprite.setPosition(well.x, ypos).setDepth(5);
             ts.allSprites.push(w.sprite); 
         }
     }

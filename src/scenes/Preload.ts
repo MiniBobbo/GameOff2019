@@ -80,17 +80,36 @@ export class Preload extends Phaser.Scene {
         });
         this.load.image('tileset');
         this.load.atlas('mainatlas', 'atlas.png', 'atlas.json');
-        this.load.audio('Shinobi', ['./music/shinobi.mp3', './music/shinobi.ogg'], {loop:true, volume:.5});
-        this.load.audio('Danger Room', ['./music/danger_room.mp3', './music/danger_room.ogg'], {loop:true, volume:.5});
-        this.load.audio('Meltdown', ['./music/meltdown.mp3', './music/meltdown.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wooly Wanderer Remix', ['./music/Wooly Wanderer.mp3', './music/Wooly Wanderer.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wooly Wanderer', ['./music/The_Wooly_Wanderer.mp3', './music/The_Wooly_Wanderer.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wooly Wanderer Stealth', ['./music/stealth_layer.mp3', './music/stealth_layer.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wooly Wanderer Battle', ['./music/battle_layer.mp3', './music/battle_layer.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wingman', ['./music/space_menu.mp3', './music/space_menu.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wingman Battle', ['./music/Space1.mp3', './music/Space1.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wingman Boss', ['./music/pursuer.mp3', './music/pursuer.ogg'], {loop:true, volume:.5});
+        this.load.atlas('bgatlas', 'bgatlas.png', 'bgatlas.json');
+        this.load.audio('Shinobi', ['./music/Shinobi.mp3', './music/Shinobi.ogg'], {loop:true, volume:.5});
+
+        this.LoadSFX();
+        // this.load.audio('Danger Room', ['./music/danger_room.mp3', './music/danger_room.ogg'], {loop:true, volume:.5});
+        // this.load.audio('Meltdown', ['./music/meltdown.mp3', './music/meltdown.ogg'], {loop:true, volume:.5});
+        // this.load.audio('Wooly Wanderer Remix', ['./music/Wooly Wanderer.mp3', './music/Wooly Wanderer.ogg'], {loop:true, volume:.5});
+        // this.load.audio('Wooly Wanderer', ['./music/The_Wooly_Wanderer.mp3', './music/The_Wooly_Wanderer.ogg'], {loop:true, volume:.5});
+        // this.load.audio('Wooly Wanderer Stealth', ['./music/stealth_layer.mp3', './music/stealth_layer.ogg'], {loop:true, volume:.5});
+        // this.load.audio('Wooly Wanderer Battle', ['./music/battle_layer.mp3', './music/battle_layer.ogg'], {loop:true, volume:.5});
+        // this.load.audio('Wingman', ['./music/space_menu.mp3', './music/space_menu.ogg'], {loop:true, volume:.5});
+        // this.load.audio('Wingman Battle', ['./music/Space1.mp3', './music/Space1.ogg'], {loop:true, volume:.5});
+        // this.load.audio('Wingman Boss', ['./music/pursuer.mp3', './music/pursuer.ogg'], {loop:true, volume:.5});
         
+    }
+    LoadSFX() {
+        this.load.audio('3', ['./sounds/3.mp3', './sounds/3.ogg']);
+        this.load.audio('2', ['./sounds/2.mp3', './sounds/2.ogg']);
+        this.load.audio('1', ['./sounds/1.mp3', './sounds/1.ogg']);
+        this.load.audio('go', ['./sounds/go.mp3', './sounds/go.ogg']);
+        this.load.audio('complete', ['./sounds/compete.mp3', './sounds/compete.ogg']);
+        this.load.audio('disgraced', ['./sounds/disgraced.mp3', './sounds/disgraced.ogg']);
+        this.load.audio('slash', ['./sounds/slash1.mp3', './sounds/slash1.ogg']);
+        this.load.audio('slash2', ['./sounds/slash2.mp3', './sounds/slash2.ogg']);
+        this.load.audio('vanish', ['./sounds/vanish.mp3', './sounds/vanish.ogg']);
+        this.load.audio('record', ['./sounds/record.mp3', './sounds/record.ogg']);
+        this.load.audio('playerdeath', ['./sounds/player_death.mp3', './sounds/player_death.ogg']);
+        this.load.audio('smallburst', ['./sounds/crossbow hit.mp3', './sounds/crossbow hit.ogg']);
+        this.load.audio('vase', ['./sounds/vase smash.mp3', './sounds/vase smash.ogg']);
+        this.load.audio('glass', ['./sounds/glass smash.mp3', './sounds/glass smash.ogg']);
     }
 
     CreateAnimations() {

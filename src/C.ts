@@ -9,7 +9,6 @@ export class C {
     static ALLOW_MOUSE_HOLD:boolean = false;
     static volume:number = .5;
     static sfx:number = .5;
-
     static songnum:number = 0;
     static music:Phaser.Sound.BaseSound;
 
@@ -21,6 +20,20 @@ export class C {
     static WinConditions:Array<LevelData>;
 
     static levelData:Array<LevelData>;
+
+    static CurrentBG:number = 0;
+    static BGList:Array<string> = ['', 'waves', 'mountains', 'sea'];
+
+    static GetBG():string {
+        return C.BGList[C.CurrentBG];
+    }
+
+    static CurrentNinjaColor:number = 0;
+    static NinjaColorList:Array<number> = [0xffffff, 0xc42c36, 0x7bcf5c, 0x13b2f2, 0xe38dd6];
+
+    static GetNinjaColor():number {
+        return C.NinjaColorList[C.CurrentNinjaColor];
+    }
 
     static CreateLevelData() {
         let l1 = new LevelData();

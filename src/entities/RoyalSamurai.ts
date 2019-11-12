@@ -24,6 +24,7 @@ export class RoyalSamurai extends Entity {
                 this.sprite.flipX = false;
 
             this.PlayAnimation('swing');
+            this.ts.sound.play('slash');
             this.ts.events.emit('ninjadead');
             return;
         }

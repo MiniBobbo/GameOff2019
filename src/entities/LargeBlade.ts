@@ -5,8 +5,8 @@ export class LargeBlade extends Entity {
         super(scene);
         this.sprite.name = 'blade';
         this.sprite.on('ninjahit', this.CheckHit, this);
+        this.sprite.setFrame('blade_0');
         this.sprite.setCircle(32);
-        this.PlayAnimation('spin');
         this.scene.events.on('update', this.Update, this);
         this.sprite.on('destroy', this.Destroy, this);
         this.sprite.setAngularVelocity(500);

@@ -28,6 +28,7 @@ export class Glass extends Entity {
         this.sprite.setAngle(Phaser.Math.Between(-180,180));
         this.PlayAnimation('shatter');
         this.killed = true;
+        this.scene.sound.play('glass');
         this.scene.time.addEvent({
             delay:500,
             callbackScope:this,

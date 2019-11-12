@@ -10,7 +10,9 @@ export class Attack extends Entity {
         this.ts = scene as TsetScene;
         this.sprite.name = 'bolt';
         this.sprite.on('ninjahit', this.CheckHit, this);
-        this.sprite.setCircle(4);
+        this.sprite.setCircle(4)
+        .setDepth(10);
+        
 
         this.sprite.on('collide', ()=> {
             this.alive = false;

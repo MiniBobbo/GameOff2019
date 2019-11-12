@@ -12,12 +12,14 @@ import { Crossbow } from "../entities/Crossbow";
 import { Grass } from "../entities/Grass";
 import { RoyalSamurai } from "../entities/RoyalSamurai";
 import { ObjectFactory } from "../ObjectFactory";
+import { BGFactory } from "../BGFactory";
 
 export class TsetScene extends Phaser.Scene {
     player!: Ninja;
     camobj!:Phaser.GameObjects.Graphics;
     waitOnInput:boolean = false;
     mousedown:boolean = false;
+    bgs!:Array<Phaser.GameObjects.TileSprite>;
     bg!:Phaser.Tilemaps.DynamicTilemapLayer;
     debug!:Phaser.GameObjects.Text;
     puff!:Phaser.GameObjects.Sprite;
@@ -59,13 +61,15 @@ export class TsetScene extends Phaser.Scene {
         this.effects = [];
         this.player = new Ninja(this);
         this.player.PlayAnimation('touchdown');
-        this.player.sprite.setDepth(5);
         let map = this.make.tilemap({ key: C.CurrentLevel });
         const tileset = map.addTilesetImage("tileset", "tileset");
-        const bg  = map.createDynamicLayer("collide", tileset, 0, 0);
+        const bg  = map.createDynamicLayer("collide", tileset, 0, 0).setDepth(3);
         this.bg = bg;
         bg.setCollisionByProperty({collide:true}, true);
         this.camobj = this.add.graphics({});
+
+        this.bgs = [];
+        
 
         this.allSprites = [];
         this.puff = this.add.sprite(0,0,'mainatlas');
@@ -83,6 +87,11 @@ export class TsetScene extends Phaser.Scene {
         this.input.keyboard.on('keydown_R', function (event:any) {
             //@ts-ignore
             this.scene.start('restart');
+    
+        }, this);
+        this.input.keyboard.on('keydown_M', function (event:any) {
+            //@ts-ignore
+            this.scene.start('menu');
     
         }, this);
 
@@ -112,6 +121,8 @@ export class TsetScene extends Phaser.Scene {
 
         this.CreateEvents();
         this.StartLevel();
+
+        BGFactory.ChangeBG(this, this.bgs,C.BGList[C.CurrentBG]);
 
     }
 
@@ -169,6 +180,10 @@ export class TsetScene extends Phaser.Scene {
             this.timeText.text = (this.timer/1000).toFixed(2);
         }
 
+        if(this.bgs != null)
+            this.bgs.forEach(element => {
+                element.emit('update');
+            });
 
     }
 
@@ -233,20 +248,21 @@ export class TsetScene extends Phaser.Scene {
     StartLevel() {
         this.player.Resume();
         this.events.emit('centertext', '3');
+        this.sound.play('3');
         this.time.addEvent({
             delay:350,
             callbackScope:this,
-            callback:() => {this.events.emit('centertext', '2');}
+            callback:() => {this.events.emit('centertext', '2');this.sound.play('2');}
         });
         this.time.addEvent({
             delay:700,
             callbackScope:this,
-            callback:() => {this.events.emit('centertext', '1');}
+            callback:() => {this.events.emit('centertext', '1');this.sound.play('1');}
         });
         this.time.addEvent({
             delay:1050,
             callbackScope:this,
-            callback:() => {this.events.emit('centertext', 'GO');  this.levelStarted = true;
+            callback:() => {this.events.emit('centertext', 'GO');  this.sound.play('go'); this.levelStarted = true;
         }
         });
     }
@@ -267,6 +283,7 @@ export class TsetScene extends Phaser.Scene {
         this.centerText.alpha = 1;
         this.player.sprite.setVelocity(0,0);
         this.centerText.setText('COMPLETE'); 
+        this.sound.play('complete');
         let bestTime = localStorage.getItem(C.CurrentLevel);
         if(bestTime == null || parseFloat(bestTime) > parseFloat(this.timeText.text)) {
             this.add.text(0, 170, '** NEW RECORD **', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
@@ -274,13 +291,16 @@ export class TsetScene extends Phaser.Scene {
             .setColor('#ff0000')
             .setStroke('#000000', 5)
             .setFixedSize(480, 0)
+            .setDepth(50)
             .setScrollFactor(0,0); 
+            this.sound.play('record');
             localStorage.setItem(C.CurrentLevel, this.timeText.text);          
         }
         this.add.text(0, 210, `Total jumps: ${this.totalJumps}`, {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
         .setFontSize(18)
         .setColor('#ffffff')
         .setStroke('#000000', 5)
+        .setDepth(50)
         .setFixedSize(480, 0)
         .setScrollFactor(0,0); 
 
@@ -296,21 +316,26 @@ export class TsetScene extends Phaser.Scene {
             callbackScope:this,
             callback:() => {
                 this.player.sprite.setVisible(false);
-                let d = this.add.sprite(this.player.sprite.x, this.player.sprite.y, 'mainatlas', '');
+                let d = this.add.sprite(this.player.sprite.x, this.player.sprite.y, 'mainatlas', '')
+                .setDepth(10);
                 d.anims.play('disappear');
+                this.sound.play('vanish');
             }
         });
     }
     SamuraiKilled(arg0: string, SamuraiKilled: any, arg2: this) {
         this.enemiesKilled++;
+        this.sound.play('slash2');
         this.CheckWinCondition();
     }
     MagistrateKilled(arg0: string, SamuraiKilled: any, arg2: this) {
         this.magistratesKilled++;
+        this.sound.play('slash2');
         this.CheckWinCondition();
     }
     RoyalSamuraiKilled(arg0: string, RoyalSamuraiKilled: any, arg2: this) {
         this.royalSamuraiKilled++;
+        this.sound.play('slash2');
         this.CheckWinCondition();
     }
 
@@ -326,7 +351,9 @@ export class TsetScene extends Phaser.Scene {
         this.waitOnInput = false;
         this.ninjaDead = true;
 
+        
         this.player.PlayAnimation('dead');
+        this.sound.play('playerdeath');
         this.player.sprite.setVelocity(-40, -100);
         this.player.sprite.setGravity(0, C.GRAVITY_Y);
         this.player.sprite.setAngularVelocity(500);
@@ -338,10 +365,13 @@ export class TsetScene extends Phaser.Scene {
                 this.player.sprite.setVisible(false);
                 let d = this.add.sprite(this.player.sprite.x, this.player.sprite.y, 'mainatlas', '');
                 d.anims.play('disappear');
+                this.sound.play('vanish');
+                this.sound.play('disgraced');
                 this.add.text(0, 150, 'Disgraced', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
                 .setFontSize(30)
                 .setColor('#ff0000')
                 .setStroke('#000000', 5)
+                .setDepth(50)
                 .setFixedSize(480, 0)
                 .setScrollFactor(0,0); 
                 },

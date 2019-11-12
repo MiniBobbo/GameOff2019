@@ -2,9 +2,12 @@ import { Entity } from "./Entity";
 
 export class BouncingBlade extends Entity {
     speed!:Phaser.Math.Vector2;
+    lastSpeed!:Phaser.Math.Vector2;
+
+
     constructor(scene:Phaser.Scene) {
         super(scene);
-        this.speed = new Phaser.Math.Vector2();
+        this.lastSpeed = new Phaser.Math.Vector2();
         this.sprite.name = 'bouncingblade';
         this.sprite.on('ninjahit', this.CheckHit, this);
         this.sprite.setCircle(16);
@@ -22,14 +25,20 @@ export class BouncingBlade extends Entity {
     }
 
     Update(time:number, dt:number) {
+
+        this.sprite.body.velocity.copy(this.lastSpeed);
+
         if(this.sprite.body.blocked.right)
-            this.sprite.body.velocity.x = -this.speed.x;
+            this.sprite.body.velocity.x = -this.lastSpeed.x;
         if(this.sprite.body.blocked.left)
-            this.sprite.body.velocity.x = this.speed.x;
+            this.sprite.body.velocity.x = -this.lastSpeed.x;
         if(this.sprite.body.blocked.up)
-            this.sprite.body.velocity.y = this.speed.y;
+            this.sprite.body.velocity.y = -this.lastSpeed.y;
         if(this.sprite.body.blocked.down)
-            this.sprite.body.velocity.y = -this.speed.y;
+            this.sprite.body.velocity.y = -this.lastSpeed.y;
+
+        this.lastSpeed.copy(this.sprite.body.velocity);
+
     }
 
     Destroy() {

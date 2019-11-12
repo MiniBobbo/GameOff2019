@@ -29,6 +29,7 @@ export class Pot extends Entity {
                 b.angle = this.sprite.angle;
                 b.play('pot_break');
                 this.scene.events.emit('noise');
+                this.scene.sound.play('vase');
                 this.scene.time.addEvent({
                     delay:1000,
                     callbackScope:this,
