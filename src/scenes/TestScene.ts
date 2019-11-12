@@ -291,6 +291,15 @@ export class TsetScene extends Phaser.Scene {
                 this.scene.start('menu');
             }
         });
+        this.time.addEvent({
+            delay:1000,
+            callbackScope:this,
+            callback:() => {
+                this.player.sprite.setVisible(false);
+                let d = this.add.sprite(this.player.sprite.x, this.player.sprite.y, 'mainatlas', '');
+                d.anims.play('disappear');
+            }
+        });
     }
     SamuraiKilled(arg0: string, SamuraiKilled: any, arg2: this) {
         this.enemiesKilled++;
@@ -319,6 +328,7 @@ export class TsetScene extends Phaser.Scene {
 
         this.player.PlayAnimation('dead');
         this.player.sprite.setVelocity(-40, -100);
+        this.player.sprite.setGravity(0, C.GRAVITY_Y);
         this.player.sprite.setAngularVelocity(500);
 
         this.time.addEvent({

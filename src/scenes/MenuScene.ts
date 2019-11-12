@@ -20,7 +20,6 @@ export class MenuScene extends Phaser.Scene {
             C.music.play();
             C.music.on('complete', () => {
                 C.music.play();
-                console.log('Music finished');
             }, this);
         }
 

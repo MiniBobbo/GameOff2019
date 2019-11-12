@@ -39,6 +39,10 @@ export class OptionsScene extends Phaser.Scene {
         C.music = this.sound.add(C.songs[C.songnum]);
         this.songtitle.text = C.songs[C.songnum];
         C.music.play();
+        C.music.on('complete', () => {
+            C.music.play();
+        }, this);
+
 
     }
     SongDwon() {
@@ -49,6 +53,9 @@ export class OptionsScene extends Phaser.Scene {
         C.music = this.sound.add(C.songs[C.songnum]);
         this.songtitle.text = C.songs[C.songnum];
         C.music.play();
+        C.music.on('complete', () => {
+            C.music.play();
+        }, this);
 
     }
 

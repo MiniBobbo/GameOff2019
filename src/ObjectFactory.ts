@@ -12,6 +12,7 @@ import { Well } from "./entities/Well";
 import { Poison } from "./entities/Poison";
 import { Glass } from "./entities/Glass";
 import { Demon } from "./entities/Demon";
+import { BouncingBlade } from "./entities/BouncingBlade";
 
 export class ObjectFactory {
     static PlaceObjects(map: Phaser.Tilemaps.Tilemap, ts:TsetScene) {
@@ -79,6 +80,16 @@ export class ObjectFactory {
             let d = o.properties.find((p:any) => {return p.name == 'firedelay'});
             let off = o.properties.find((p:any) => {return p.name == 'fireoffset'});
             s.ArmCrossbow(angle.value, vel.value, d.value, off.value);
+            ts.allSprites.push(s.sprite);
+        });
+        let bblades = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'bblade'});
+        bblades.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
+            let s = new BouncingBlade(ts);
+            s.sprite.setPosition(o.x,o.y);
+            let angle = o.properties.find((p:any) => {return p.name == 'angle'});
+            let vel = o.properties.find((p:any) => {return p.name == 'velocity'});
+            ts.physics.velocityFromAngle(angle.value, vel.value, s.sprite.body.velocity);
+            s.speed.copy(s.sprite.body.velocity);
             ts.allSprites.push(s.sprite);
         });
         let poisons = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'poison'});
