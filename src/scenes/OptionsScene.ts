@@ -46,6 +46,14 @@ export class OptionsScene extends Phaser.Scene {
         .setFontSize(20).setWordWrapWidth(480)
         .on('pointerdown',  () => {this.NextBG();});
 
+        let changeMusic = this.add.text(0,160,'Change Music', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
+        .setFixedSize(480,0)
+        .setScrollFactor(0,0)
+        .setInteractive()
+        .setDepth(50)
+        .setFontSize(20).setWordWrapWidth(480)
+        .on('pointerdown',  () => {this.SongUp();});
+
         let back = this.add.text(0,210,'Back to menu', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
         .setFixedSize(480,0)
         .setFontSize(20).setWordWrapWidth(480)

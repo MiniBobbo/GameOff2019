@@ -13,8 +13,12 @@ Sprits that pursue you through the level.
 Moving platforms
 -Glass makes noise
 Right click to watch your best time.
-Bouncing blades
+- Bouncing blades
 Holding down the mouse button will jump as soon as you land or allow a fudge factor around the player for allowing jumps slightly before contact with the wall or gound.
+-Portals
+Warp drive
+Bouncy tiles
+
 
 Powerups (Placed in the level and are used immediately when picked up)
 Firebomb

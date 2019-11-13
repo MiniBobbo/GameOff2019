@@ -13,6 +13,7 @@ import { Poison } from "./entities/Poison";
 import { Glass } from "./entities/Glass";
 import { Demon } from "./entities/Demon";
 import { BouncingBlade } from "./entities/BouncingBlade";
+import { Portal } from "./entities/Portal";
 
 export class ObjectFactory {
     static PlaceObjects(map: Phaser.Tilemaps.Tilemap, ts:TsetScene) {
@@ -96,6 +97,25 @@ export class ObjectFactory {
         let poisons = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'poison'});
         poisons.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
             let p = new Poison(ts);
+            p.sprite.setPosition(o.x,o.y).setDepth(5);
+            ts.allSprites.push(p.sprite);
+        });
+        let portals = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'portal'});
+        let allPortals:Array<{key:number, portal:Portal}> = [];
+        portals.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
+            let p = new Portal(ts);
+            let n:number = parseInt(o.type);
+            //Find a matching portal if there is one.
+            let match = allPortals.find((o) => {return o.key==n});
+            if(match != null) {
+                p.CreateLink(match.portal);
+            } else {
+                allPortals.push({key:n, portal:p});
+
+            }
+
+            //@ts-ignore
+            C.CenterOfTile(o);
             p.sprite.setPosition(o.x,o.y).setDepth(5);
             ts.allSprites.push(p.sprite);
         });
