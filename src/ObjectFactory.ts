@@ -14,6 +14,7 @@ import { Glass } from "./entities/Glass";
 import { Demon } from "./entities/Demon";
 import { BouncingBlade } from "./entities/BouncingBlade";
 import { Portal } from "./entities/Portal";
+import { Warp } from "./entities/Warp";
 
 export class ObjectFactory {
     static PlaceObjects(map: Phaser.Tilemaps.Tilemap, ts:TsetScene) {
@@ -81,6 +82,16 @@ export class ObjectFactory {
             let d = o.properties.find((p:any) => {return p.name == 'firedelay'});
             let off = o.properties.find((p:any) => {return p.name == 'fireoffset'});
             s.ArmCrossbow(angle.value, vel.value, d.value, off.value);
+            ts.allSprites.push(s.sprite);
+        });
+        let warps = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'warp'});
+        warps.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
+            let s = new Warp(ts);
+            s.sprite.setPosition(o.x,o.y).setDepth(5);
+            let angle = o.properties.find((p:any) => {return p.name == 'angle'});
+            let strength = o.properties.find((p:any) => {return p.name == 'strength'});
+            s.sprite.angle = angle.value;
+            s.strength = strength.value;
             ts.allSprites.push(s.sprite);
         });
         let bblades = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'bblade'});

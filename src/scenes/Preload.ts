@@ -140,6 +140,7 @@ export class Preload extends Phaser.Scene {
         this.anims.create({ key: 'bolt_fire', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'bolt_', end: 49 }), repeat: -1 });
         this.anims.create({ key: 'smallburst', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'smallburst_', end: 16 }), repeat: 0 });
         this.anims.create({ key: 'portal_portal', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'portal_', end: 29 }), repeat: -1 });
+        this.anims.create({ key: 'warp_warp', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'warp_', end: 29 }), repeat: -1 });
         this.anims.create({ key: 'grass_sway', frameRate: 30, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'grass_', end: 59 }), repeat: -1 });
         this.anims.create({ key: 'glass_shatter', frameRate: 30, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'glassshatter_', end: 23 }), repeat: 0 });
     }

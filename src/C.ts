@@ -16,7 +16,7 @@ export class C {
     static CurrentLevelData:LevelData;
     static songs:Array<string> = ['Shinobi', 'Danger Room', 'Meltdown', 'Wooly Wanderer Remix', 'Wooly Wanderer', 'Wooly Wanderer Stealth', 'Wooly Wanderer Battle', 'Wingman', 'Wingman Battle', 'Wingman Boss'];
     static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6', 'Level 7', "Level 8", 
-    'Level 9', 'Level 10', 'Level 11', 'Level 12', 'Level 13', 'Level 14', 'Level 15', 'Level 16'];
+    'Level 9', 'Level 10', 'Level 11', 'Level 12', 'Level 13', 'Level 14', 'Level 15', 'Level 16', 'Level 17'];
     static WinConditions:Array<LevelData>;
 
     static levelData:Array<LevelData>;
@@ -131,6 +131,11 @@ export class C {
             return false;
         });
         C.CreateLevelCondition('Level 16', 'Think with portals', (level:TsetScene) =>{
+            if(level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 17', 'Reach the flag', (level:TsetScene) =>{
             if(level.touchingFlag)
             return true;
             return false;
