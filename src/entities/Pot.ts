@@ -27,6 +27,7 @@ export class Pot extends Entity {
                 this.sprite.setVisible(false);
                 let b = this.scene.add.sprite(this.sprite.x, this.sprite.y, 'mainatlas', 'potbreak_0');
                 b.angle = this.sprite.angle;
+                b.setDepth(30);
                 b.play('pot_break');
                 this.scene.events.emit('noise');
                 this.scene.sound.play('vase');

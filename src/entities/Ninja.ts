@@ -61,7 +61,6 @@ export class Ninja extends Entity {
 
     }
     Destroy() {
-        console.log('Ninja destroy');
         this.scene.events.removeListener('update', this.Update, this);
         this.sprite.removeListener('dead', () => {this.dead = true;}, this);
         this.sprite.removeListener('collide', this.GetJump, this);

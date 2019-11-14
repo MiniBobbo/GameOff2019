@@ -14,6 +14,15 @@ export class C {
 
     static CurrentLevel = '2';
     static CurrentLevelData:LevelData;
+    static songDesc:Array<String> = ['Shinobi was created for this game which marks the 10th (?) game jam collaboration between DaveB and JamesOliverMusic.',
+                                    'Cybernation came from the game "AI Can Make Even Trivial Tasks Deadly" for Community Game Jam 2 which came in second place for fun somehow.',
+                                    'Danger Room is an action precision platformer created for Weekly Jame Jam - Week 65.  It is still one of DaveB\'s favorites.',
+                                    `Wooly Wanderer was originally from an unreleased game called WombatMan created for a GameBoy jam, but it got a second life as a remix in Danger Room.  DaveB's favorite title of a song ever.`,
+                                    `King and Country was released for Ludum Dare 43 - Sacrifices Must Be Made.  It was an experiment in vector art and the strategy genre.`,
+                                    `Basil Price is an Ace Attorney inspired investigative game for Ludum Dare 44 with hand drawn art.  Good fun and great music.`,
+                                    `Wingman is an shoot-em-up created for Ludum Dare 42 - Running out of Space.  One of the most polished games created by DaveB and JamesOliverMusic.`,
+                                    `Ronin is an atmospheric beat-em-up with a Samurai Jack theme created for TV Game Jam.`
+                                ];
     static songs:Array<string> = ['Shinobi', 'Cybernation', 'Danger Room', 'Wooly Wanderer Remix', 'King and Country', 'Basil Price', 'Wingman', 'Ronin'];
     static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6', 'Level 7', "Level 8", 
     'Level 9', 'Level 10', 'Level 11', 'Level 12', 'Level 13', 'Level 14', 'Level 15', 'Level 16', 'Level 17', 'Level 18', 'Level 19', 'Level 20'];
