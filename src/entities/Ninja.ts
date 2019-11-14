@@ -42,6 +42,7 @@ export class Ninja extends Entity {
         if(this.dead)
             return;
         // console.log('Ninja update');
+        this.sprite.setAccelerationY(0);
         if(!this.prepareForJump) {
             if(this.vertical) {
                 if(this.sprite.body.velocity.y > 0)

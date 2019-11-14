@@ -14,9 +14,9 @@ export class C {
 
     static CurrentLevel = '2';
     static CurrentLevelData:LevelData;
-    static songs:Array<string> = ['Shinobi', 'Danger Room', 'Meltdown', 'Wooly Wanderer Remix', 'Wooly Wanderer', 'Wooly Wanderer Stealth', 'Wooly Wanderer Battle', 'Wingman', 'Wingman Battle', 'Wingman Boss'];
+    static songs:Array<string> = ['Shinobi', 'Cybernation', 'Danger Room', 'Wooly Wanderer Remix', 'King and Country', 'Basil Price', 'Wingman', 'Ronin'];
     static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6', 'Level 7', "Level 8", 
-    'Level 9', 'Level 10', 'Level 11', 'Level 12', 'Level 13', 'Level 14', 'Level 15', 'Level 16', 'Level 17'];
+    'Level 9', 'Level 10', 'Level 11', 'Level 12', 'Level 13', 'Level 14', 'Level 15', 'Level 16', 'Level 17', 'Level 18', 'Level 19', 'Level 20'];
     static WinConditions:Array<LevelData>;
 
     static levelData:Array<LevelData>;
@@ -136,6 +136,21 @@ export class C {
             return false;
         });
         C.CreateLevelCondition('Level 17', 'Reach the flag', (level:TsetScene) =>{
+            if(level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 18', 'Kill the samurai.  Reach the flag.', (level:TsetScene) =>{
+            if(level.enemiesKilled == 2 && level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 19', 'Reach the flag', (level:TsetScene) =>{
+            if(level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 20', 'Reach the flag', (level:TsetScene) =>{
             if(level.touchingFlag)
             return true;
             return false;

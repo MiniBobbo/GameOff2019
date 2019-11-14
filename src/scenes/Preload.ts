@@ -82,18 +82,15 @@ export class Preload extends Phaser.Scene {
         this.load.atlas('mainatlas', 'atlas.png', 'atlas.json');
         this.load.atlas('bgatlas', 'bgatlas.png', 'bgatlas.json');
         this.load.audio('Shinobi', ['./music/Shinobi.mp3', './music/Shinobi.ogg'], {loop:true, volume:.5});
+        this.load.audio('Cybernation', ['./music/cybernation.mp3', './music/cybernation.ogg'], {loop:true, volume:.5});
+        this.load.audio('Danger Room', ['./music/danger_room.mp3', './music/danger_room.ogg'], {loop:true, volume:.5});
+        this.load.audio('Wooly Wanderer Remix', ['./music/Wooly Wanderer.mp3', './music/Wooly Wanderer.ogg'], {loop:true, volume:.5});
+        this.load.audio('King and Country', ['./music/Enemy_turn.mp3', './music/Enemy_turn.ogg'], {loop:true, volume:.5});
+        this.load.audio('Basil Price', ['./music/Jazzfunk_1.mp3', './music/Jazzfunk_1.ogg'], {loop:true, volume:.5});
+        this.load.audio('Wingman', ['./music/pursuer.mp3', './music/pursuer.ogg'], {loop:true, volume:.5});
+        this.load.audio('Ronin', ['./music/samurai_battle_2.mp3', './music/samurai_battle_2.ogg'], {loop:true, volume:.5});
 
         this.LoadSFX();
-        this.load.audio('Danger Room', ['./music/danger_room.mp3', './music/danger_room.ogg'], {loop:true, volume:.5});
-        this.load.audio('Meltdown', ['./music/meltdown.mp3', './music/meltdown.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wooly Wanderer Remix', ['./music/Wooly Wanderer.mp3', './music/Wooly Wanderer.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wooly Wanderer', ['./music/The_Wooly_Wanderer.mp3', './music/The_Wooly_Wanderer.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wooly Wanderer Stealth', ['./music/stealth_layer.mp3', './music/stealth_layer.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wooly Wanderer Battle', ['./music/battle_layer.mp3', './music/battle_layer.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wingman', ['./music/space_menu.mp3', './music/space_menu.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wingman Battle', ['./music/Space1.mp3', './music/Space1.ogg'], {loop:true, volume:.5});
-        this.load.audio('Wingman Boss', ['./music/pursuer.mp3', './music/pursuer.ogg'], {loop:true, volume:.5});
-        
     }
     LoadSFX() {
         this.load.audio('3', ['./sounds/3.mp3', './sounds/3.ogg']);
@@ -138,6 +135,8 @@ export class Preload extends Phaser.Scene {
         this.anims.create({ key: 'disappear', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'disappear_', end: 29 }), repeat: 0 });
         this.anims.create({ key: 'pot_break', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'potbreak_', end: 58 }), repeat: 0 });
         this.anims.create({ key: 'bolt_fire', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'bolt_', end: 49 }), repeat: -1 });
+        this.anims.create({ key: 'vaffect_vert', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'thing_vert_', end: 3 }), repeat: -1 });
+        this.anims.create({ key: 'vaffect_horiz', frameRate: 12, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'thing_horiz_', end: 3 }), repeat: -1 });
         this.anims.create({ key: 'smallburst', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'smallburst_', end: 16 }), repeat: 0 });
         this.anims.create({ key: 'portal_portal', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'portal_', end: 29 }), repeat: -1 });
         this.anims.create({ key: 'warp_warp', frameRate: 60, frames: this.anims.generateFrameNames('mainatlas', { prefix: 'warp_', end: 29 }), repeat: -1 });

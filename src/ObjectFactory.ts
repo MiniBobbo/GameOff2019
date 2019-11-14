@@ -15,6 +15,7 @@ import { Demon } from "./entities/Demon";
 import { BouncingBlade } from "./entities/BouncingBlade";
 import { Portal } from "./entities/Portal";
 import { Warp } from "./entities/Warp";
+import { VAffect } from "./entities/VAffect";
 
 export class ObjectFactory {
     static PlaceObjects(map: Phaser.Tilemaps.Tilemap, ts:TsetScene) {
@@ -109,6 +110,16 @@ export class ObjectFactory {
         poisons.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
             let p = new Poison(ts);
             p.sprite.setPosition(o.x,o.y).setDepth(5);
+            ts.allSprites.push(p.sprite);
+        });
+        let downs = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'vaffect'});
+        downs.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
+            let p = new VAffect(ts);
+            //@ts-ignore
+            C.CenterOfTile(o);
+            p.sprite.setPosition(o.x,o.y).setDepth(5);
+            if(o.type == '1')
+                p.IsVertical(false);
             ts.allSprites.push(p.sprite);
         });
         let portals = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'portal'});

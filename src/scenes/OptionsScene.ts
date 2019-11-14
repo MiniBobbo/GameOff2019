@@ -15,7 +15,7 @@ export class OptionsScene extends Phaser.Scene {
         .setFixedSize(480,0)
         .setScrollFactor(0,0)
         .setDepth(50)
-        .setFontSize(40).setWordWrapWidth(480);
+        .setFontSize(40).setWordWrapWidth(240);
 
         this.ninja = this.add.sprite(100,100,'mainatlas', 'ninja_stand_0')
         .setScrollFactor(0,0)
@@ -23,40 +23,40 @@ export class OptionsScene extends Phaser.Scene {
         .setTint(C.GetNinjaColor());
 
         let clear = this.add.text(0,85,'Reset Times', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
-        .setFixedSize(480,0)
+        .setFixedSize(240,0)
         .setScrollFactor(0,0)
         .setInteractive()
         .setDepth(50)
-        .setFontSize(20).setWordWrapWidth(480)
+        .setFontSize(20).setWordWrapWidth(240)
         .on('pointerdown',  () => {localStorage.clear();});
 
         let changeColor = this.add.text(0,110,'Change Ninja Color', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
-        .setFixedSize(480,0)
+        .setFixedSize(240,0)
         .setScrollFactor(0,0)
         .setInteractive()
         .setDepth(50)
-        .setFontSize(20).setWordWrapWidth(480)
+        .setFontSize(20).setWordWrapWidth(240)
         .on('pointerdown',  () => {this.NextColor();});
 
         let changeBG = this.add.text(0,135,'Change Background', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
-        .setFixedSize(480,0)
+        .setFixedSize(240,0)
         .setScrollFactor(0,0)
         .setInteractive()
         .setDepth(50)
-        .setFontSize(20).setWordWrapWidth(480)
+        .setFontSize(20).setWordWrapWidth(240)
         .on('pointerdown',  () => {this.NextBG();});
 
         let changeMusic = this.add.text(0,160,'Change Music', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
-        .setFixedSize(480,0)
+        .setFixedSize(240,0)
         .setScrollFactor(0,0)
         .setInteractive()
         .setDepth(50)
-        .setFontSize(20).setWordWrapWidth(480)
+        .setFontSize(20).setWordWrapWidth(240)
         .on('pointerdown',  () => {this.SongUp();});
 
         let back = this.add.text(0,210,'Back to menu', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
-        .setFixedSize(480,0)
-        .setFontSize(20).setWordWrapWidth(480)
+        .setFixedSize(240,0)
+        .setFontSize(20).setWordWrapWidth(240)
         .setScrollFactor(0,0)
         .setDepth(50)
         .setInteractive()

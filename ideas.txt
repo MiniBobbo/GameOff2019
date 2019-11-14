@@ -18,6 +18,7 @@ Holding down the mouse button will jump as soon as you land or allow a fudge fac
 -Portals
 Warp drive
 Bouncy tiles
+-Tiles that stop all X and negative Y velocity
 
 
 Powerups (Placed in the level and are used immediately when picked up)
