@@ -8,7 +8,7 @@ export class MenuScene extends Phaser.Scene {
     totalTimes:number = 0;
     AllLevelsComplete = true;
     music!:Phaser.Sound.BaseSound;
-    BoxHeight:number = 45;
+    BoxHeight:number = 40;
     BoxWidth:number = 60;
 
     bgs!:Array<Phaser.GameObjects.TileSprite>;
@@ -48,7 +48,7 @@ export class MenuScene extends Phaser.Scene {
                 y:0
             });
             g.lineStyle(2, 0xffffff);
-            g.strokeRect(0,0, this.BoxWidth, 45);
+            g.strokeRect(0,0, this.BoxWidth, this.BoxHeight);
             group.add(g);
             group.setDepth(50);
             let time = localStorage.getItem(element);
@@ -60,7 +60,7 @@ export class MenuScene extends Phaser.Scene {
             } 
 
 
-            let start = this.add.text(0,2,`${element}\n${time} s`, {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
+            let start = this.add.text(0,0,`${element}\n${time} s`, {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
             .setFixedSize(this.BoxWidth,45).setInteractive().setDepth(50);
             start.on('pointerdown', () => {
                 C.CurrentLevel = element;
@@ -73,21 +73,21 @@ export class MenuScene extends Phaser.Scene {
         
         Phaser.Actions.GridAlign(this.levels, {
             x:50,
-            y:110,
+            y:100,
             cellWidth:65,
-            cellHeight:50,
+            cellHeight:45,
             width: 7,
-            height:3
+            height:4
         });
 
         let totalTime = this.add.text(0,5,'Total Time: ---', {align:'center', fontFamily: '"Yeon Sung", "Arial"'})
         .setFixedSize(480,0)
         .setFontSize(20).setDepth(50)
         .setWordWrapWidth(480);
-        let hint = this.add.text(3,240,'Press R to restart a level', { fontFamily: '"Yeon Sung", "Arial"'})
-        .setFixedSize(120,0)
-        .setFontSize(12).setDepth(50)
-        .setWordWrapWidth(120);
+        // let hint = this.add.text(3,240,'Press R to restart a level', { fontFamily: '"Yeon Sung", "Arial"'})
+        // .setFixedSize(120,0)
+        // .setFontSize(12).setDepth(50)
+        // .setWordWrapWidth(120);
         if(this.AllLevelsComplete) {
             totalTime.text = `Total Time: ${this.totalTimes.toFixed(2)} s`;
         }

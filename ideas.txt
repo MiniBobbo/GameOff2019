@@ -19,6 +19,8 @@ Holding down the mouse button will jump as soon as you land or allow a fudge fac
 Warp drive
 Bouncy tiles
 -Tiles that stop all X and negative Y velocity
+Spikes that pop up after you stand on them for a second.
+Spikes that pop up on a rhythm.
 
 
 Powerups (Placed in the level and are used immediately when picked up)

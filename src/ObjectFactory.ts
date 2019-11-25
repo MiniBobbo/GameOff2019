@@ -91,8 +91,12 @@ export class ObjectFactory {
             s.sprite.setPosition(o.x,o.y).setDepth(5);
             let angle = o.properties.find((p:any) => {return p.name == 'angle'});
             let strength = o.properties.find((p:any) => {return p.name == 'strength'});
+            let rotation = o.properties.find((p:any) => {return p.name == 'rotate'});
+            if(rotation != null)
+                s.sprite.setAngularVelocity(rotation.value);
             s.sprite.angle = angle.value;
             s.strength = strength.value;
+            
             ts.allSprites.push(s.sprite);
         });
         let bblades = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'bblade'});

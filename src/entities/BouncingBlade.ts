@@ -1,4 +1,6 @@
 import { Entity } from "./Entity";
+import { EffectFactory } from "../EffectFactory";
+import { TsetScene } from "../scenes/TestScene";
 
 export class BouncingBlade extends Entity {
     speed!:Phaser.Math.Vector2;
@@ -28,14 +30,27 @@ export class BouncingBlade extends Entity {
 
         this.sprite.body.velocity.copy(this.lastSpeed);
 
-        if(this.sprite.body.blocked.right)
+        if(this.sprite.body.blocked.right) {
             this.sprite.body.velocity.x = -this.lastSpeed.x;
-        if(this.sprite.body.blocked.left)
+            let e = EffectFactory.CreateSpark(this.scene as TsetScene, this.sprite);            
+            e.angle = -90;
+        }
+        if(this.sprite.body.blocked.left) {
+            let e = EffectFactory.CreateSpark(this.scene as TsetScene, this.sprite);            
+            e.angle = 90;
             this.sprite.body.velocity.x = -this.lastSpeed.x;
-        if(this.sprite.body.blocked.up)
+        }
+        if(this.sprite.body.blocked.up) {
             this.sprite.body.velocity.y = -this.lastSpeed.y;
-        if(this.sprite.body.blocked.down)
+            let e = EffectFactory.CreateSpark(this.scene as TsetScene, this.sprite);            
+            e.angle = -180;
+        }
+        if(this.sprite.body.blocked.down) {
             this.sprite.body.velocity.y = -this.lastSpeed.y;
+            let e = EffectFactory.CreateSpark(this.scene as TsetScene, this.sprite);            
+            e.angle = 0;
+
+        }
 
         this.lastSpeed.copy(this.sprite.body.velocity);
 
