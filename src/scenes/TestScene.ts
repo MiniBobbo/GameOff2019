@@ -13,6 +13,7 @@ import { Grass } from "../entities/Grass";
 import { RoyalSamurai } from "../entities/RoyalSamurai";
 import { ObjectFactory } from "../ObjectFactory";
 import { BGFactory } from "../BGFactory";
+import { TrackBolt } from "../entities/TrackBolt";
 
 export class TsetScene extends Phaser.Scene {
     player!: Ninja;
@@ -396,7 +397,18 @@ export class TsetScene extends Phaser.Scene {
 
         }
         return a;
-    }           
+    }
+    
+    GetTrackbolt() {
+        let a = this.attacks.find((a:any) => {return !a.alive && a.sprite.name == 'trackbolt';});
+        if (a==null) {
+            a = new TrackBolt(this);
+            this.allSprites.push(a.sprite);
+
+        }
+        return a;
+
+    }
     GetEffect() {
         let a = this.effects.find((a:Phaser.GameObjects.Sprite) => {return !a.active;});
         if (a==null) {

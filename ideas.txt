@@ -8,7 +8,7 @@ Burn the supplies
 -Avoid the traps
 -Two crossbows shooting down a very narrow corridor
 -Attack from stealth
-Sprits that pursue you through the level.
+-Spirits that pursue you through the level.
 -Climb the tower without falling back down
 Moving platforms
 -Glass makes noise
@@ -16,7 +16,7 @@ Right click to watch your best time.
 - Bouncing blades
 Holding down the mouse button will jump as soon as you land or allow a fudge factor around the player for allowing jumps slightly before contact with the wall or gound.
 -Portals
-Warp drive
+-Warp drive
 Bouncy tiles
 -Tiles that stop all X and negative Y velocity
 Spikes that pop up after you stand on them for a second.

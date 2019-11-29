@@ -16,6 +16,8 @@ import { BouncingBlade } from "./entities/BouncingBlade";
 import { Portal } from "./entities/Portal";
 import { Warp } from "./entities/Warp";
 import { VAffect } from "./entities/VAffect";
+import { TrackBolt } from "./entities/TrackBolt";
+import { TrackShooter } from "./entities/TrackShooter";
 
 export class ObjectFactory {
     static PlaceObjects(map: Phaser.Tilemaps.Tilemap, ts:TsetScene) {
@@ -83,6 +85,14 @@ export class ObjectFactory {
             let d = o.properties.find((p:any) => {return p.name == 'firedelay'});
             let off = o.properties.find((p:any) => {return p.name == 'fireoffset'});
             s.ArmCrossbow(angle.value, vel.value, d.value, off.value);
+            ts.allSprites.push(s.sprite);
+        });
+        let trackbolts = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'trackbolt'});
+        trackbolts.forEach( (o:Phaser.Types.Tilemaps.TiledObject) => {
+            let s = new TrackShooter(ts);
+            s.sprite.setPosition(o.x,o.y).setDepth(5);
+            let off = o.properties.find((p:any) => {return p.name == 'delay'});
+            s.ArmCrossbow(off.value);
             ts.allSprites.push(s.sprite);
         });
         let warps = o.objects.filter( (obj:Phaser.Types.Tilemaps.TiledObject) => {return obj.name == 'warp'});
