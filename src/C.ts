@@ -26,7 +26,7 @@ export class C {
     static songs:Array<string> = ['Shinobi', 'Cybernation', 'Danger Room', 'Wooly Wanderer Remix', 'King and Country', 'Basil Price', 'Wingman', 'Ronin'];
     static Levels:Array<string> = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5', 'Level 6', 'Level 7', "Level 8", 
     'Level 9', 'Level 10', 'Level 11', 'Level 12', 'Level 13', 'Level 14', 'Level 15', 'Level 16', 'Level 17', 'Level 18', 
-    'Level 19', 'Level 20', 'Level 21', 'Level 22'];
+    'Level 19', 'Level 20', 'Level 21', 'Level 22', 'Level 23', 'Level 24', 'Level 25', 'Level 26', 'Level 27'];
     static WinConditions:Array<LevelData>;
 
     static levelData:Array<LevelData>;
@@ -172,6 +172,31 @@ export class C {
         });
 
         C.CreateLevelCondition('Level 22', 'Reach the flag', (level:TsetScene) =>{
+            if(level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 23', 'Reach the flag', (level:TsetScene) =>{
+            if(level.touchingFlag)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 24', 'Attack the Oni from the grass.', (level:TsetScene) =>{
+            if(level.royalSamuraiKilled == 1)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 25', 'Poison the well.', (level:TsetScene) =>{
+            if(level.touchingFlag && level.thingCollected == 1)
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 26', 'Kill all the samurai and the magistrate.', (level:TsetScene) =>{
+            if(level.enemiesKilled == 3 && level.magistratesKilled==1 )
+            return true;
+            return false;
+        });
+        C.CreateLevelCondition('Level 27', 'Reach the flag', (level:TsetScene) =>{
             if(level.touchingFlag)
             return true;
             return false;

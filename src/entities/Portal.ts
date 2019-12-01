@@ -26,7 +26,7 @@ export class Portal extends Entity {
             this.linked.allow = false;
             this.ts.cameras.main.flash(300);
             this.ts.time.addEvent({
-                delay:300,
+                delay:500,
                 callbackScope:this,
                 callback:() => {
                     this.allow = true;

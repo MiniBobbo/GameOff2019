@@ -21,6 +21,8 @@ Bouncy tiles
 -Tiles that stop all X and negative Y velocity
 Spikes that pop up after you stand on them for a second.
 Spikes that pop up on a rhythm.
+- Portal Maze where you have to memorize the path
+
 
 
 Powerups (Placed in the level and are used immediately when picked up)

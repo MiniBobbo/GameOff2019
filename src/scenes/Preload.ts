@@ -107,6 +107,7 @@ export class Preload extends Phaser.Scene {
         this.load.audio('smallburst', ['./sounds/crossbow hit.mp3', './sounds/crossbow hit.ogg']);
         this.load.audio('vase', ['./sounds/vase smash.mp3', './sounds/vase smash.ogg']);
         this.load.audio('glass', ['./sounds/glass smash.mp3', './sounds/glass smash.ogg']);
+        this.load.audio('jump', './sounds/jump2.wav');
     }
 
     CreateAnimations() {

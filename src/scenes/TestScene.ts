@@ -206,6 +206,7 @@ export class TsetScene extends Phaser.Scene {
         if(this.ninjaDead || !this.waitOnInput || !this.levelStarted) 
             return;
         this.totalJumps++;
+        this.sound.play('jump', {volume:.5});
         let a = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, this.input.mousePointer.worldX, this.input.mousePointer.worldY);
         a = Phaser.Math.RadToDeg(a);
         // console.log(`Angle: ${a}`);
